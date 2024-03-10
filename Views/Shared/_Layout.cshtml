@@ -1,39 +1,634 @@
-﻿<!DOCTYPE html>
-<html>
+﻿<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+@*@using CaptchaMvc.HtmlHelpers
+    @using CaptchaMvc*@
+@*@using WebBanDongHo.Models.Entities*@
+@{
+    //WebBanDongHoDbContext db = new WebBanDongHoDbContext();
+    //IEnumerable<LoaiSanPham> LLSP = db.LoaiSanPhams.ToList();
+    //IEnumerable<ThongTin> LTT = db.ThongTins.ToList();
+    //ThongTin TT = null;
+    //if (LTT.Count() > 0)
+    //{
+    //    TT = LTT.First();
+    //}
+}
+<!DOCTYPE html>
+<html lang="zxx">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <title>Luxury Watch || Đồng Hồ Chính Hãng</title>
+    <!-- Meta tag Keywords -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="Electro Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <!-- //Meta tag Keywords -->
+    <!-- Custom-Files -->
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- Bootstrap css -->
+    <link href="~/Content/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- Main css -->
+    <link rel="stylesheet" href="~/Content/css/fontawesome-all.css">
+    <!-- Font-Awesome-Icons-CSS -->
+    <link href="~/Content/css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- pop-up-box -->
+    <link href="~/Content/css/menu.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- menu style -->
+    <!-- //Custom-Files -->
+    <!-- web fonts -->
+    <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese"
+          rel="stylesheet">
+    <!-- //web fonts -->
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-        <div class="container">
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                </ul>
+    <!-- top-header -->
+
+    @Html.Action("TaiKhoanPartial", "Home")
+
+
+    <!-- Button trigger modal(select-location) -->
+    <!-- //shop locator (popup) -->
+    <!-- modals -->
+    <!-- log in -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">Đăng Nhập</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @using (Ajax.BeginForm("DangNhap", "Home", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "thongBaoDN" }))
+                    {
+                        <form>
+                            <div class="form-group">
+                                <label class="col-form-label">Username</label>
+                                <input type="text" class="form-control" placeholder=" " name="TaiKhoan" required="">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label">Password</label>
+                                <input type="password" class="form-control" placeholder=" " name="MatKhau" required="">
+                            </div>
+                            <h4 style="color:red;" , id="thongBaoDN"></h4>
+                            <div class="right-w3l">
+                                <input type="submit" class="form-control" value="Đăng Nhập">
+                            </div>
+                            <div class="sub-w3l">
+                                <div class="custom-control custom-checkbox mr-sm-2">
+                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
+                                </div>
+                            </div>
+                            <p class="text-center dont-do mt-3">
+                                Không có tài khoản?
+                                <a href="#" data-toggle="modal" data-target="#exampleModal2">
+                                    Đăng Ký Ngay
+                                </a>
+                            </p>
+                        </form>
+                    }
+
+                </div>
             </div>
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
     </div>
+    <!-- register -->
+    @*<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" id="dangky-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Register</h5> <h5 style="color:red;">@ViewBag.loi</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @using (Ajax.BeginForm("DangKy", "Home", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "thongBaoDK" }))
+                        {
+                            <form>
+                                <table class="table">
+                                    <tr>
+                                        <th>
+                                            <div class="form-group">
+                                                <label class="col-form-label">Tài khoản</label>
+                                                <input type="text" class="form-control" placeholder=" " name="TaiKhoan" required="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-form-label">Họ Tên</label>
+                                                <input type="text" class="form-control" placeholder=" " name="HoTen" required="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-form-label">Địa chỉ</label>
+                                                <input type="text" class="form-control" placeholder=" " name="DiaChi" required="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-form-label">Email</label>
+                                                <input type="email" class="form-control" placeholder=" " name="Email" required="">
+                                            </div>
+                                        </th>
+                                        <th>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+                                            <div class="form-group">
+                                                <label class="col-form-label">Số điện thoại</label>
+                                                <input type="text" class="form-control" placeholder=" " name="SoDienThoai" required="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-form-label">Password</label>
+                                                <input type="password" class="form-control" placeholder=" " name="MatKhau" id="password1" required="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-form-label">Confirm Password</label>
+                                                <input type="password" class="form-control" placeholder=" " name="Confirm Password" id="password2" required="">
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.Captcha(5)
+                                            </div>
+                                        </th>
+                                    </tr>
+
+                                </table>
+                                <h4 style="color:red;" , id="thongBaoDK"></h4>
+                                <div class="right-w3l">
+                                    <input type="submit" class="form-control" value="Register">
+                                </div>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+    <style>
+        #dangky-dialog {
+            max-width: 900px;
+        }
+    </style>
+    <!-- //modal -->
+    <!-- //top-header -->
+    <!-- header-bottom-->
+    <div class="header-bot">
+        <div class="container">
+            <div class="row header-bot_inner_wthreeinfo_header_mid">
+                <!-- logo -->
+                <div class="col-md-3 logo_agile">
+                    <h1 class="text-center">
+                        <a href="@Url.Action("Index", "Home")" class="font-weight-bold font-italic">
+                            <img src="~/Content/images/logo.jpg" alt=" " class="img-fluid">
+                            <h1 style="color:#ffd700">Luxury Store</h1>
+                        </a>
+                    </h1>
+                </div>
+                <!-- //logo -->
+                <!-- header-bot -->
+                <div class="col-md-9 header mt-4 mb-md-0 mb-4">
+                    <div class="row">
+                        <!-- search -->
+                        <div class="col-10 agileits_search">
+                            <form class="form-inline" action="/TimKiem/KetQuaTimKiem" method="post">
+                                <input class="form-control mr-sm-2" type="search" name="txtTuKhoa" placeholder="Nhập tên sản phẩm cần tìm" aria-label="Search" required>
+                                <button class="btn my-2 my-sm-0 btnmd" type="submit">Tìm Kiếm</button>
+                            </form>
+                        </div>
+                        <!-- //search -->
+                        <!-- cart details -->
+                        <div class="col-2 top_nav_right text-center mt-sm-0 mt-2">
+                            <div class="wthreecartaits wthreecartaits2 cart cart box_1">
+                                <button class="btn w3view-cart" type="button" id="giohang">
+                                    <i class="fas fa-cart-arrow-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- //cart details -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- shop locator (popup) -->
+    <!-- //header-bottom -->
+    <!-- navigation -->
+    <div class="navbar-inner">
+        <div class="container">
+            @*@Html.Action("MenuPartial", "Home")*@
+        </div>
+    </div>
+    <!-- //navigation -->
+    <!-- banner -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item item1 active">
+                <div class="container">
+                    <div class="w3l-space-banner">
+                        <div class="carousel-caption p-lg-5 p-sm-4 p-3">
+                            <p>
+                                Ưu đãi
+                                <span>Mua 1 tặng 1</span>
+                            </p>
+                            <h3 class="font-weight-bold pt-2 pb-lg-5 pb-4">
+                                tặng đồng hồ đến
+                                <span>10 Triệu</span>
+
+                            </h3>
+                            <a class="button2" href="product.html">Mua ngay </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item item2">
+                <div class="container">
+                    <div class="w3l-space-banner">
+                        <div class="carousel-caption p-lg-5 p-sm-4 p-3">
+                            <p>
+                                Ưu đãi
+                                <span>cực hấp dẫn</span>
+                            </p>
+                            <h3 class="font-weight-bold pt-2 pb-lg-5 pb-4">
+                                dành cho
+                                <span>khách hàng thân thiết</span>
+                            </h3>
+                            <a class="button2" href="product.html">Mua Ngay </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item item3">
+                <div class="container">
+                    <div class="w3l-space-banner">
+                        <div class="carousel-caption p-lg-5 p-sm-4 p-3">
+                            <p>
+                                Giảm giá
+                                <span>15%</span>
+                            </p>
+                            <h3 class="font-weight-bold pt-2 pb-lg-5 pb-4">
+                                vào bất kỳ
+                                <span>thời điểm mua hàng</span>
+                            </h3>
+                            <a class="button2" href="product.html">Mua Ngay</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item item4">
+                <div class="container">
+                    <div class="w3l-space-banner">
+                        <div class="carousel-caption p-lg-5 p-sm-4 p-3">
+                            <p>
+                                Nhận ngay Giảm giá
+                                <span>40%</span>
+                            </p>
+                            <h3 class="font-weight-bold pt-2 pb-lg-5 pb-4">
+
+                                <span>GIẢM GIÁ</span> NGAY HÔM NAY
+                            </h3>
+                            <a class="button2" href="product.html">Mua Ngay </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    <!-- //banner -->
+    @RenderBody()
+    <!-- top Products -->
+    <!-- middle section -->
+    <!-- footer -->
+    <footer>
+        <div class="footer-top-first">
+            <div class="container py-md-5 py-sm-4 py-3">
+
+                <!-- //footer first section -->
+                <!-- footer second section -->
+                <div class="row w3l-grids-footer border-top border-bottom py-sm-4 py-3">
+                    <div class="col-md-4 offer-footer">
+                        <div class="row">
+                            <div class="col-4 icon-fot">
+                                <i class="fas fa-dolly"></i>
+                            </div>
+                            <div class="col-8 text-form-footer">
+                                <h3>Giao Hàng Miễn Phí</h3>
+                                <p>Với đơn hàng trên 2.000.000</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 offer-footer my-md-0 my-4">
+                        <div class="row">
+                            <div class="col-4 icon-fot">
+                                <i class="fas fa-shipping-fast"></i>
+                            </div>
+                            <div class="col-8 text-form-footer">
+                                <h3>Giao Hàng Hỏa Tốc</h3>
+                                <p>Trên toàn quốc</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 offer-footer">
+                        <div class="row">
+                            <div class="col-4 icon-fot">
+                                <i class="far fa-thumbs-up"></i>
+                            </div>
+                            <div class="col-8 text-form-footer">
+                                <h3>Sự Lựa Chọn Tốt</h3>
+                                <p>Sản phẩm tốt</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //footer second section -->
+            </div>
+        </div>
+        <!-- footer third section -->
+        <div class="w3l-middlefooter-sec">
+            <div class="container py-md-5 py-sm-4 py-3">
+                <div class="row footer-info w3-agileits-info">
+                    <!-- footer categories -->
+                    <div class="col-md-3 col-sm-6 footer-grids">
+                        <h3 class="text-white font-weight-bold mb-3">Phân Loại</h3>
+                        <ul>
+                            @*@if (LLSP.Count() > 0)
+                                {
+                                    foreach (var item in LLSP)
+                                    {*@
+                            <li class="mb-3">
+                                <a href="@Url.Action("HienThiDanhSachSanPham", "SanPham")"></a>
+                            </li>
+                            @*}
+                                }*@
+                            <li>Nam</li>
+                            <li>Nữ</li>
+                        </ul>
+                    </div>
+                    <!-- //footer categories -->
+                    <!-- quick links -->
+                    <div class="col-md-3 col-sm-6 footer-grids mt-sm-0 mt-4">
+                        <h3 class="text-white font-weight-bold mb-3">Thông Tin</h3>
+                        <ul>
+                            <li class="mb-3">
+                                <a href="@Url.Action("GioiThieu", "GioiThieu")">Giới Thiệu</a>
+                            </li>
+                            <li class="mb-3">
+                                <a href="@Url.Action("LienHe", "LienHe")">Liên Hệ</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-sm-6 footer-grids mt-md-0 mt-4">
+                        <h3 class="text-white font-weight-bold mb-3">Liên Hệ</h3>
+                        <ul>
+                            @*@if (TT != null)
+                                {*@
+                            <li class="mb-3">
+                                <i class="fas fa-map-marker"></i>Hutech khu E
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-phone"></i>09122312
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-envelope-open"></i>
+                                <a href="#"> trinhgianhsoi@gmail.com</a>
+                            </li>
+                            @*  *@
+
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-sm-6 footer-grids w3l-agileits mt-md-0 mt-4">
+                        <!-- newsletter -->
+                        <h3 class="text-white font-weight-bold mb-3">Tin tức mới</h3>
+                        <p class="mb-3">Miễn phí trong lần đầu tiên đặt hàng</p>
+                        <form action="#" method="post">
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Email" name="email" required="">
+                                <input type="submit" value="Gửi">
+                            </div>
+                        </form>
+                        <!-- //newsletter -->
+                        <!-- social icons -->
+                        <div class="footer-grids  w3l-socialmk mt-3">
+                            <h3 class="text-white font-weight-bold mb-3">Theo dõi</h3>
+                            <div class="social">
+                                <ul>
+                                    <li>
+                                        <a class="icon fb" href="#">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="icon tw" href="#">
+                                            <i class="fab fa-twitter"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="icon gp" href="#">
+                                            <i class="fab fa-google-plus-g"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- //social icons -->
+                    </div>
+                </div>
+                <!-- //quick links -->
+            </div>
+        </div>
+        <!-- //footer third section -->
+        <!-- footer fourth section -->
+        <!-- //footer fourth section (text) -->
+    </footer>
+    <!-- //footer -->
+    <!-- copyright -->
+    <div class="copy-right py-3">
+        <div class="container">
+            <p class="text-center text-white">
+                © 2024 Luxury Watch Store. All rights reserved | Design by
+                <a href="http://w3layouts.com"> Vanh_Giang_Vy_Duong</a>
+            </p>
+        </div>
+    </div>
+    @*@Html.Action("GioHangPartial", "GioHang")*@
+
+    <!-- //copyright -->
+    <!-- js-files -->
+    <!-- jquery -->
+
+    <script src="~/Content/js/jquery-2.2.3.min.js"></script>
+    <!-- //jquery -->
+    <!-- nav smooth scroll -->
+    <script>
+        $("#giohang").off('click').on('click', function () {
+            $('#giohangModal').modal('show');
+        })
+        hiengiohang
+        $(".hiengiohang").off('click').on('click', function () {
+            $('#giohangModal').modal('show');
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+            $(".dropdown").hover(
+                function () {
+                    $('.dropdown-menu', this).stop(true, true).slideDown("fast");
+                    $(this).toggleClass('open');
+                },
+                function () {
+                    $('.dropdown-menu', this).stop(true, true).slideUp("fast");
+                    $(this).toggleClass('open');
+                }
+            );
+        });
+    </script>
+    <!-- //nav smooth scroll -->
+    <!-- popup modal (for location)-->
+    <script src="~/Content/js/jquery.magnific-popup.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.popup-with-zoom-anim').magnificPopup({
+                type: 'inline',
+                fixedContentPos: false,
+                fixedBgPos: true,
+                overflowY: 'auto',
+                closeBtnInside: true,
+                preloader: false,
+                midClick: true,
+                removalDelay: 300,
+                mainClass: 'my-mfp-zoom-in'
+            });
+
+        });
+    </script>
+    <!-- //popup modal (for location)-->
+    <!-- cart-js -->
+    <script src="~/Content/js/minicart.js"></script>
+    <script>
+
+        paypals.minicarts.render();
+        paypals.minicarts.cart.on('checkout', function (evt) {
+            var items = this.items(),
+                len = items.length,
+                total = 0,
+                i;
+
+            // Count the number of each item in the cart
+            for (i = 0; i < len; i++) {
+                total += items[i].get('quantity');
+            }
+
+            if (total < 1) {
+                alert('The minimum order quantity is 1. Please add more to your shopping cart before checking out');
+                evt.preventDefault();
+            }
+        });
+    </script>
+    <!-- //cart-js -->
+    <!-- password-script -->
+    <script>
+        window.onload = function () {
+            document.getElementById("password1").onchange = validatePassword;
+            document.getElementById("password2").onchange = validatePassword;
+        }
+
+        function validatePassword() {
+            var pass2 = document.getElementById("password2").value;
+            var pass1 = document.getElementById("password1").value;
+            if (pass1 != pass2)
+                document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+            else
+                document.getElementById("password2").setCustomValidity('');
+            //empty string means no validation error
+        }
+    </script>
+    <!-- imagezoom -->
+    <script src="~/Content/js/imagezoom.js"></script>
+    <!-- //imagezoom -->
+    <!-- flexslider -->
+    <link rel="stylesheet" href="~/Content/css/flexslider.css" type="text/css" media="screen" />
+
+    <script src="~/Content/js/jquery.flexslider.js"></script>
+    <script>
+        // Can also be used with $(document).ready()
+        $(window).load(function () {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                controlNav: "thumbnails"
+            });
+        });
+    </script>
+    <!-- //FlexSlider-->
+    <!-- //password-script -->
+    <!-- scroll seller -->
+    <script src="~/Content/js/scroll.js"></script>
+    <!-- //scroll seller -->
+    <!-- smoothscroll -->
+    <script src="~/Content/js/SmoothScroll.min.js"></script>
+    <!-- //smoothscroll -->
+    <!-- start-smooth-scrolling -->
+    <script src="~/Content/js/move-top.js"></script>
+    <script src="~/Content/js/easing.js"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+
+                $('html,body').animate({
+                    scrollTop: $(this.hash).offset().top
+                }, 1000);
+            });
+        });
+    </script>
+    <!-- //end-smooth-scrolling -->
+    <!-- smooth-scrolling-of-move-up -->
+    <script>
+        $(document).ready(function () {
+            /*
+            var defaults = {
+                containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+            };
+            */
+            $().UItoTop({
+                easingType: 'easeOutQuart'
+            });
+
+        });
+    </script>
+    <!-- //smooth-scrolling-of-move-up -->
+    <!-- for bootstrap working -->
+    <script src="~/Content/js/bootstrap.js"></script>
+    <!-- //for bootstrap working -->
+    <!-- //js-files -->
 </body>
+
 </html>

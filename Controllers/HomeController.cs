@@ -26,5 +26,27 @@ namespace LuxyryWatch.Controllers
 
             return View();
         }
+        public ActionResult Home_Layout()
+        {
+            return View();
+        }
+        public ActionResult HienThiSanPhamTheoLoaiPartial()
+        {
+            return PartialView();
+        }
+        public ActionResult LienHe()
+        {
+            return View();
+        }
+        public ActionResult MenuPartial()
+        {
+            //ViewBag.listDMSP = db.LoaiSanPhams.ToList();
+            //ViewBag.listMenu = db.SanPhams.ToList();
+            return PartialView();
+        }
+        public ActionResult TaiKhoanPartial()
+        {
+            return PartialView();
+        }
     }
 }

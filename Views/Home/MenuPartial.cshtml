@@ -1,6 +1,7 @@
-﻿@{
-    ViewBag.Title = "MenuPartial";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@using LuxyryWatch.Models;
+@{
+    IEnumerable<LoaiSanPham> listDMSN = (IEnumerable<LoaiSanPham>)ViewBag.listDMSP;
+    IEnumerable<SanPham> listMenu = (IEnumerable<SanPham>)ViewBag.listMenu;
 }
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
@@ -11,33 +12,34 @@
         <ul class="navbar-nav ml-auto text-center mr-xl-5">
             <li class="nav-item active mr-lg-2 mb-lg-0 mb-2">
                 <a class="nav-link" href="@Url.Action("Index", "Home")">
-                    Home
+                    Trang chu
                     <span class="sr-only">(current)</span>
                 </a>
             </li>
-            @*@foreach (var groupItem in listDMSN)
-            {*@
+            @foreach (var groupItem in listDMSN)
+            {
                 <li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @*@groupItem.TenLoaiSP*@ Nam
+                        @groupItem.TenLoaiSP
                     </a>
                     <div class="dropdown-menu" style="display: none;">
-                        @*@foreach (var item in listMenu.Where(x => x.MaLoaiSP == groupItem.MaLoaiSP).GroupBy(n => n.NhaSanXuat))
+                        @foreach (var item in listMenu.Where(x => x.MaLoaiSP == groupItem.MaLoaiSP).GroupBy(n => n.NhaSanXuat))
                         {
                             if (item.Key != null)
-                            {*@
-                                <a class="dropdown-item" href=""></a>
-                     
-                        <a class="dropdown-item" href="product2.html">Product 2</a>
+                            {
+                                <a class="dropdown-item" href="@Url.Action("HienThiDanhSachSanPham", "SanPham", new{ @MaLoaiSP = groupItem.MaLoaiSP, @MaNSX = item.Key.MaNSX})">@item.Key.TenNSX</a>
+                            }
+                        }
+                        @*<a class="dropdown-item" href="product2.html">Product 2</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="single.html">Single Product 1</a>
                             <a class="dropdown-item" href="single2.html">Single Product 2</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="checkout.html">Checkout Page</a>
-                            <a class="dropdown-item" href="payment.html">Payment Page</a>
+                            <a class="dropdown-item" href="payment.html">Payment Page</a>*@
                     </div>
                 </li>
-            @*}*@
+            }
             @*<li class="nav-item dropdown mr-lg-2 mb-lg-0 mb-2">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Electronics
@@ -200,12 +202,11 @@
                     </div>
                 </li>*@
             <li class="nav-item mr-lg-2 mb-lg-0 mb-2">
-                <a class="nav-link" href="@Url.Action("GioiThieu", "GioiThieu")">Giới Thiệu</a>
+                <a class="nav-link" href="@Url.Action("GioiThieu", "GioiThieu")">About Us</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("LienHe", "LienHe")">Liên Hệ</a>
+                <a class="nav-link" href="@Url.Action("LienHe", "LienHe")">Contact Us</a>
             </li>
         </ul>
     </div>
 </nav>
-

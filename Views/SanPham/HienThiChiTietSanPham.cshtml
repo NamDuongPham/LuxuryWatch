@@ -1,9 +1,13 @@
-﻿
+﻿@using LuxyryWatch.Models
+@model SanPham
 @{
     ViewBag.Title = "HienThiChiTietSanPham";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/Home_Layout.cshtml";
 }
-
+@{
+    IEnumerable<AnhSanPham> LASP = (IEnumerable<AnhSanPham>)ViewBag.AnhSP;
+    int y = LASP.Count();
+}
 <div class="banner-bootom-w3-agileits py-5">
     <div class="container py-xl-4 py-lg-2">
         <!-- //tittle heading -->
@@ -12,11 +16,11 @@
                 <div class="grid images_3_of_2">
                     <div class="flexslider">
                         <ul class="slides">
-                            @*@foreach (var item in LASP)
-                            {*@
-                                <li data-thumb="~/Content/HinhAnhSP/_thumbs/Files/AriesGoldAG-L5032ZG-W-L-2.jpg">
+                            @foreach (var item in LASP)
+                            {
+                                <li data-thumb="@Url.Content("~"+item.TenAnhSP)">
                                     <div class="thumb-image">
-                                        <img src="~/Content/HinhAnhSP/files/AriesGoldAG-L9023G-W-1.jpg" data-imagezoom="true" class="img-fluid" alt="">
+                                        <img src="@Url.Content("~"+item.TenAnhSP)" data-imagezoom="true" class="img-fluid" alt="">
                                     </div>
                                 </li>
                             }
@@ -27,45 +31,26 @@
             </div>
 
             <div class="col-lg-7 single-right-left simpleCart_shelfItem">
-                <h3 class="mb-3">Đồng hồ Casio 40 mm Nam MTP-M300D-7AVDF</h3>
+                <h3 class="mb-3">@Model.TenSP</h3>
                 <p class="mb-3">
-                    @*@if (ViewBag.GiaKhuyenMai == null)
-                    {*@
-                        <span class="item_price">$4.000.000</span>
-                    @*}
+                    @if (ViewBag.GiaKhuyenMai == null)
+                    {
+                        <span class="item_price">@Model.DonGia.Value.ToString("#,##")</span>
+                    }
                     else
                     {
                         decimal giakhuyenmai = (decimal)ViewBag.GiaKhuyenMai;
                         <span class="item_price">@giakhuyenmai.ToString("#,##")</span>
                         <del class="mx-2 font-weight-light">@Model.DonGia.Value.ToString("#,##")</del>
-                    }*@
+                    }
 
                 </p>
                 <div class="product-single-w3l">
-                    @*@Html.Raw(Model.ThongSo)*@
-                    <ul >
-                        <li style="list-style: none">
-                            Đối tượng sử dụng: Nam
-                        </li>
-                        <li style="list-style: none">
-                            Đường kính mặt: 40 mm
-                        </li>
-                        <li style="list-style: none">
-                            Dây đeo: Thép không gỉ
-                        </li>
-                        <li style="list-style: none">
-                            Độ rộng dây: 19.8 mm
-                        </li>
-                        <li style="list-style: none">
-                            Độ dày mặt: 9.3 mm
-                        </li>
-
-                    </ul>
-                    
+                    @Html.Raw(Model.ThongSo)
                 </div>
                 <div class="occasion-cart">
                     <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                        <a href="@Url.Action("ThemGioHang", "GioHang")" class="hiengiohang"><input type="button" value="Thêm vào giỏ" class="button btn" style="margin-top: 13px"></a>
+                        <a href="@Url.Action("ThemGioHang", "GioHang", new { @MaSP = Model.MaSP, @strUrl = Request.Url.ToString()})" class="hiengiohang"><input type="button" value="Add to cart" class="button btn"></a>
                     </div>
                 </div>
             </div>
@@ -74,10 +59,6 @@
     <div class="container py-xl-4 py-lg-2">
         <h2>Mô tả sản phẩm</h2>
         <hr />
-        @*@Html.Raw(Model.MoTa)*@
-    <p>
-        Mẫu đồng hồ này không chỉ phù hợp với những anh chàng có dáng người mảnh khảnh, mà còn là sự lựa chọn thông minh cho những bạn có cổ tay vừa vì đường kính mặt của sản phẩm là 40 mm. Hơn nữa, hãng đã lựa chọn kính khoáng (Mineral) làm chất liệu mặt kính nhờ có độ cứng, khả năng chịu va đập khá và độ trong suốt cao cho phép người dùng dễ dàng quan sát mặt đồng hồ.
-    </p>
+        @Html.Raw(Model.MoTa)
     </div>
 </div>
-

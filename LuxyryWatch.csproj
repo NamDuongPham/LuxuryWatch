@@ -52,6 +52,12 @@
       <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -140,10 +146,11 @@
     <Compile Include="Models\ChiTietDonDatHang.cs" />
     <Compile Include="Models\ChiTietPhieuNhap.cs" />
     <Compile Include="Models\ChuongTrinhKhuyenMai.cs" />
-    <Compile Include="Models\C__MigrationHistory.cs" />
     <Compile Include="Models\DoiTacThanhToan.cs" />
     <Compile Include="Models\DonDatHang.cs" />
     <Compile Include="Models\HinhThucThanhToan.cs" />
+    <Compile Include="Models\ItemGioHang.cs" />
+    <Compile Include="Models\ItemSanPham.cs" />
     <Compile Include="Models\KhachHang.cs" />
     <Compile Include="Models\LoaiSanPham.cs" />
     <Compile Include="Models\LoaiThanhVien.cs" />
@@ -156,7 +163,6 @@
     <Compile Include="Models\SanPham.cs" />
     <Compile Include="Models\SanPhamKhuyenMai.cs" />
     <Compile Include="Models\Slider.cs" />
-    <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\ThanhVien.cs" />
     <Compile Include="Models\ThongTin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -12,7 +12,6 @@ namespace LuxyryWatch.Models
         {
         }
 
-        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<AnhSanPham> AnhSanPhams { get; set; }
         public virtual DbSet<ChiTietDonDatHang> ChiTietDonDatHangs { get; set; }
         public virtual DbSet<ChiTietPhieuNhap> ChiTietPhieuNhaps { get; set; }
@@ -31,7 +30,6 @@ namespace LuxyryWatch.Models
         public virtual DbSet<SanPham> SanPhams { get; set; }
         public virtual DbSet<SanPhamKhuyenMai> SanPhamKhuyenMais { get; set; }
         public virtual DbSet<Slider> Sliders { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<ThanhVien> ThanhViens { get; set; }
         public virtual DbSet<ThongTin> ThongTins { get; set; }
 

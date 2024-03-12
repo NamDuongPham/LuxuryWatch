@@ -1,9 +1,16 @@
-﻿
+﻿@using PagedList.Mvc
+@using LuxyryWatch.Models
+@model PagedList.IPagedList<ItemSanPham>
 @{
     ViewBag.Title = "HienThiDanhSachSanPham";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/Home_Layout.cshtml";
 }
-
+@{
+    IEnumerable<SanPhamKhuyenMai> LSPKM = (IEnumerable<SanPhamKhuyenMai>)ViewBag.LSMPK;
+    IEnumerable<NhaSanXuat> LNSX = (IEnumerable<NhaSanXuat>)ViewBag.HangSanXuat;
+    IEnumerable<LoaiSanPham> LLSP = (IEnumerable<LoaiSanPham>)ViewBag.LoaiSanPham;
+    IEnumerable<SanPham> LSP = (IEnumerable<SanPham>)ViewBag.ListSP;
+}
 <div class="ads-grid py-sm-5 py-4">
     <div class="container py-xl-4 py-lg-2">
         <!-- tittle heading -->
@@ -18,60 +25,60 @@
                     <!-- first section -->
                     <div class="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mb-4">
                         <div class="row">
-                            @*@foreach (var item in Model.Take(3))
-                            {*@
+                            @foreach (var item in Model.Take(3))
+                            {
                                 <div class="col-md-4 product-men mt-md-0 mt-5">
                                     <div class="men-pro-item simpleCart_shelfItem">
                                         <div class="men-thumb-item text-center">
-                                            @*@if (item.HinhAnh != null)
-                                            {*@
-                                                <img src="~/Content/HinhAnhSP/files/AriesGoldAG-G101G-BU-4.jpg" alt="" style="height: 200px; width: 200px;" />
-                                            @*}
+                                            @if (item.HinhAnh != null)
+                                            {
+                                                <img src="@Url.Content("~"+item.HinhAnh)" alt="" style="height: 200px; width: 200px;" />
+                                            }
                                             else
                                             {
                                                 <img src="~/Content/HinhAnhSP/anh-blogspot-khong-hien-thi.png" style="height: 200px; width: 200px;" />
-                                            }*@
+                                            }
                                             <div class="men-cart-pro">
                                                 <div class="inner-men-cart-pro">
-                                                    <a href="@Url.Action("HienThiChiTietSanPham", "SanPham")" class="link-product-add-cart">Quick View</a>
+                                                    <a href="@Url.Action("HienThiChiTietSanPham", "SanPham", new { @MaSP = item.MaSP })" class="link-product-add-cart">Quick View</a>
                                                 </div>
                                             </div>
-                                            @*@if (item.Moi == true)
-                                            {*@
+                                            @if (item.Moi == true)
+                                            {
                                                 <span class="product-new-top">New</span>
-                                            @*}*@
+                                            }
                                         </div>
                                         <div class="item-info-product text-center border-top mt-4">
                                             <h4 class="pt-1">
-                                                <a href="@Url.Action("HienThiChiTietSanPham", "SanPham")">Dong Ho</a>
+                                                <a href="@Url.Action("HienThiChiTietSanPham", "SanPham", new { @MaSP = item.MaSP })">@item.TenSP</a>
                                             </h4>
-                                            @*@if (LSPKM == null)
-                                            {*@
+                                            @if (LSPKM == null)
+                                            {
                                                 <div class="info-product-price my-2">
-                                                    <span class="item_price">$2000000</span>
+                                                    <span class="item_price">@item.DonGia.Value.ToString("#,##")</span>
                                                 </div>
-                                            @*}
+                                            }
                                             else
-                                            {*@
-                                                @*SanPhamKhuyenMai SPKM = LSPKM.SingleOrDefault(x => x.MaSP == item.MaSP);
+                                            {
+                                                SanPhamKhuyenMai SPKM = LSPKM.SingleOrDefault(x => x.MaSP == item.MaSP);
                                                 if (SPKM != null)
                                                 {
-                                                    SanPham SP = LSP.SingleOrDefault(x => x.MaSP == item.MaSP);*@
+                                                    SanPham SP = LSP.SingleOrDefault(x => x.MaSP == item.MaSP);
                                                     <div class="info-product-price my-2">
-                                                        <span class="item_price">$1.000.000</span>
-                                                        <del>500.000</del>
-                                                    @*</div>
+                                                        <span class="item_price">@item.DonGia.Value.ToString("#,##")</span>
+                                                        <del>@SP.DonGia.Value.ToString("#,##")</del>
+                                                    </div>
                                                 }
                                                 else
                                                 {
                                                     <div class="info-product-price my-2">
                                                         <span class="item_price">@item.DonGia.Value.ToString("#,##")</span>
-                                                    </div>*@
+                                                    </div>
                                                 }
                                             }
 
                                             <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                                <a href="#" class="hiengiohang"><input type="submit" name="submit" value="Thêm vào giỏ" class="button btn"></a>
+                                                <a href="@Url.Action("ThemGioHang", "GioHang", new { @MaSP = item.MaSP, @strUrl = Request.Url.ToString() })" class="hiengiohang"><input type="submit" name="submit" value="Add to cart" class="button btn"></a>
                                             </div>
 
                                         </div>
@@ -82,96 +89,44 @@
                     </div>
                     <!-- //first section -->
                     <!-- second section -->
-                    @*@if (Model.Count() > 3)
-                    {*@
+                    @if (Model.Count() > 3)
+                    {
                         <div class="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mb-4">
                             <div class="row">
-                                @*@foreach (var item in Model.Skip(3).Take(3))
-                                {*@
+                                @foreach (var item in Model.Skip(3).Take(3))
+                                {
                                     <div class="col-md-4 product-men mt-md-0 mt-5">
                                         <div class="men-pro-item simpleCart_shelfItem">
                                             <div class="men-thumb-item text-center">
-                                                @*@if (item.HinhAnh != null)
-                                                {*@
-                                                    <img src="~/Content/HinhAnhSP/files/AriesGoldAG-L5032ZG-W-L-1.jpg" alt="" style="height: 200px; width: 200px;" />
-                                                @*}
-                                                else
-                                                {*@
-                                                    @*<img src="~/Content/HinhAnhSP/anh-blogspot-khong-hien-thi.png" style="height: 200px; width: 200px;" />
-                                                }*@
-                                                <div class="men-cart-pro">
-                                                    <div class="inner-men-cart-pro">
-                                                        <a href="@Url.Action("HienThiChiTietSanPham", "SanPham")" class="link-product-add-cart">Quick View</a>
-                                                    </div>
-                                                </div>
-                                                @*@if (item.Moi == true)
-                                                {*@
-                                                    <span class="product-new-top">New</span>
-                                                @*  *@}
-                                            </div>
-                                            <div class="item-info-product text-center border-top mt-4">
-                                                <h4 class="pt-1">
-                                                    <a href="@Url.Action("HienThiChiTietSanPham", "SanPham")">Dong Ho</a>
-                                                </h4>
-                                                @*@if (LSPKM == null)
-                                                {*@
-                                                    <div class="info-product-price my-2">
-                                                        <span class="item_price">$4.000.000</span>
-                                                    </div>
+                                                @if (item.HinhAnh != null)
+                                                {
+                                                    <img src="@Url.Content("~"+item.HinhAnh)" alt="" style="height: 200px; width: 200px;" />
                                                 }
-                                             
-
-                                                <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                                    <a href="@Url.Action("ThemGioHang", "GioHang")" class="hiengiohang"><input type="submit" name="submit" value="Add to cart" class="button btn"></a>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    }
-                    <!-- //second section -->
-                    <!-- 3rd section -->
-                    @*@if (Model.Count() > 6)
-                    {*@
-                        <div class="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mt-4">
-                            <div class="row">
-                                @*@foreach (var item in Model.Skip(6).Take(3))
-                                {*@
-                                    <div class="col-md-4 product-men mt-md-0 mt-5">
-                                        <div class="men-pro-item simpleCart_shelfItem">
-                                            <div class="men-thumb-item text-center">
-                                                @*@if (item.HinhAnh != null)
-                                                {*@
-                                                    <img src="~/Content/HinhAnhSP/files/AriesGoldAG-L5032ZG-W-L-2.jpg" alt="" style="height: 200px; width: 200px;" />
-                                                @*  *@}
-                                                @*else
+                                                else
                                                 {
                                                     <img src="~/Content/HinhAnhSP/anh-blogspot-khong-hien-thi.png" style="height: 200px; width: 200px;" />
-                                                }*@
+                                                }
                                                 <div class="men-cart-pro">
                                                     <div class="inner-men-cart-pro">
-                                                        <a href="@Url.Action("HienThiChiTietSanPham", "SanPham")" class="link-product-add-cart">Quick View</a>
+                                                        <a href="@Url.Action("HienThiChiTietSanPham", "SanPham", new { @MaSP = item.MaSP })" class="link-product-add-cart">Quick View</a>
                                                     </div>
                                                 </div>
-                                                @*@if (item.Moi == true)
-                                                {*@
+                                                @if (item.Moi == true)
+                                                {
                                                     <span class="product-new-top">New</span>
-                                                @*  *@}
+                                                }
                                             </div>
                                             <div class="item-info-product text-center border-top mt-4">
                                                 <h4 class="pt-1">
-                                                    <a href="@Url.Action("HienThiChiTietSanPham", "SanPham")">Dong Ho</a>
+                                                    <a href="@Url.Action("HienThiChiTietSanPham", "SanPham", new { @MaSP = item.MaSP })">@item.TenSP</a>
                                                 </h4>
-                                                @*@if (LSPKM == null)
-                                                {*@
+                                                @if (LSPKM == null)
+                                                {
                                                     <div class="info-product-price my-2">
-                                                        <span class="item_price">$2.000.000</span>
+                                                        <span class="item_price">@item.DonGia.Value.ToString("#,##")</span>
                                                     </div>
-                                                @*  *@}
-                                                @*else
+                                                }
+                                                else
                                                 {
                                                     SanPhamKhuyenMai SPKM = LSPKM.SingleOrDefault(x => x.MaSP == item.MaSP);
                                                     if (SPKM != null)
@@ -188,10 +143,79 @@
                                                             <span class="item_price">@item.DonGia.Value.ToString("#,##")</span>
                                                         </div>
                                                     }
-                                                }*@
+                                                }
 
                                                 <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                                    <a href="@Url.Action("ThemGioHang", "GioHang")" class="hiengiohang"><input type="submit" name="submit" value="Add to cart" class="button btn"></a>
+                                                    <a href="@Url.Action("ThemGioHang", "GioHang", new { @MaSP = item.MaSP, @strUrl = Request.Url.ToString() })" class="hiengiohang"><input type="submit" name="submit" value="Add to cart" class="button btn"></a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                    <!-- //second section -->
+                    <!-- 3rd section -->
+                    @if (Model.Count() > 6)
+                    {
+                        <div class="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mt-4">
+                            <div class="row">
+                                @foreach (var item in Model.Skip(6).Take(3))
+                                {
+                                    <div class="col-md-4 product-men mt-md-0 mt-5">
+                                        <div class="men-pro-item simpleCart_shelfItem">
+                                            <div class="men-thumb-item text-center">
+                                                @if (item.HinhAnh != null)
+                                                {
+                                                    <img src="@Url.Content("~"+item.HinhAnh)" alt="" style="height: 200px; width: 200px;" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/Content/HinhAnhSP/anh-blogspot-khong-hien-thi.png" style="height: 200px; width: 200px;" />
+                                                }
+                                                <div class="men-cart-pro">
+                                                    <div class="inner-men-cart-pro">
+                                                        <a href="@Url.Action("HienThiChiTietSanPham", "SanPham", new { @MaSP = item.MaSP })" class="link-product-add-cart">Quick View</a>
+                                                    </div>
+                                                </div>
+                                                @if (item.Moi == true)
+                                                {
+                                                    <span class="product-new-top">New</span>
+                                                }
+                                            </div>
+                                            <div class="item-info-product text-center border-top mt-4">
+                                                <h4 class="pt-1">
+                                                    <a href="@Url.Action("HienThiChiTietSanPham", "SanPham", new { @MaSP = item.MaSP })">@item.TenSP</a>
+                                                </h4>
+                                                @if (LSPKM == null)
+                                                {
+                                                    <div class="info-product-price my-2">
+                                                        <span class="item_price">@item.DonGia.Value.ToString("#,##")</span>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    SanPhamKhuyenMai SPKM = LSPKM.SingleOrDefault(x => x.MaSP == item.MaSP);
+                                                    if (SPKM != null)
+                                                    {
+                                                        SanPham SP = LSP.SingleOrDefault(x => x.MaSP == item.MaSP);
+                                                        <div class="info-product-price my-2">
+                                                            <span class="item_price">@item.DonGia.Value.ToString("#,##")</span>
+                                                            <del>@SP.DonGia.Value.ToString("#,##")</del>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="info-product-price my-2">
+                                                            <span class="item_price">@item.DonGia.Value.ToString("#,##")</span>
+                                                        </div>
+                                                    }
+                                                }
+
+                                                <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                                    <a href="@Url.Action("ThemGioHang", "GioHang", new { @MaSP = item.MaSP, @strUrl = Request.Url.ToString() })" class="hiengiohang"><input type="submit" name="submit" value="Add to cart" class="button btn"></a>
                                                 </div>
 
                                             </div>
@@ -205,7 +229,7 @@
                     <!-- fourth section -->
                     <!-- //fourth section -->
                     <div>
-                        @*@Html.PagedListPager(Model, Page => Url.Action("HienThiDanhSachSanPham", new
+                        @Html.PagedListPager(Model, Page => Url.Action("HienThiDanhSachSanPham", new
                    {
                        page = Page,
                        @MaLoaiSP = @ViewBag.MaLoaiSP,
@@ -217,7 +241,7 @@
                    {
                        LiElementClasses = new string[] { "item" },
 
-                   })*@
+                   })
                     </div>
                 </div>
             </div>
@@ -240,12 +264,12 @@
                         <h3 class="agileits-sear-head mb-3">Loại sản phẩm</h3>
                         <div class="w3l-range">
                             <ul>
-                                @*@foreach (var item in LLSP)
-                                {*@
+                                @foreach (var item in LLSP)
+                                {
                                     <li>
-                                        <a href="@Url.Action("HienThiDanhSachSanPham", "SanPham")">Dong Ho</a>
+                                        <a href="@Url.Action("HienThiDanhSachSanPham", "SanPham", new{  @MaLoaiSP = item.MaLoaiSP})">@item.TenLoaiSP</a>
                                     </li>
-                                @*  *@}
+                                }
                             </ul>
                         </div>
                     </div>
@@ -255,12 +279,12 @@
                         <h3 class="agileits-sear-head mb-3">Hãng sản xuất</h3>
                         <div class="w3l-range">
                             <ul>
-                                @*@foreach (var item in LNSX)
-                                {*@
+                                @foreach (var item in LNSX)
+                                {
                                     <li>
-                                        <a href="@Url.Action("HienThiDanhSachSanPham", "SanPham")">Bao</a>
+                                        <a href="@Url.Action("HienThiDanhSachSanPham", "SanPham", new{  @MaNSX = item.MaNSX})">@item.TenNSX</a>
                                     </li>
-                                @*}*@
+                                }
                             </ul>
                         </div>
                     </div>
@@ -306,7 +330,7 @@
         </div>
     </div>
 </div>
-    </div>
+
 <style>
     .item {
         height: 30px;
@@ -331,5 +355,3 @@
         background-color: #EEEEEE;
     }
 </style>
-
-

@@ -160,3 +160,7 @@ C:\Users\levietanh0108\Source\Repos\LuxuryWatch\obj\Debug\LuxyryWatch.csproj.Cor
 C:\Users\levietanh0108\Source\Repos\LuxuryWatch\obj\Debug\LuxyryWatch.csproj.CopyComplete
 C:\Users\levietanh0108\Source\Repos\LuxuryWatch\obj\Debug\LuxyryWatch.dll
 C:\Users\levietanh0108\Source\Repos\LuxuryWatch\obj\Debug\LuxyryWatch.pdb
+C:\Users\levietanh0108\source\repos\LuxuryWatch\bin\PagedList.dll
+C:\Users\levietanh0108\source\repos\LuxuryWatch\bin\PagedList.Mvc.dll
+C:\Users\levietanh0108\source\repos\LuxuryWatch\bin\PagedList.xml
+C:\Users\levietanh0108\source\repos\LuxuryWatch\bin\PagedList.Mvc.xml

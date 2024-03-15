@@ -80,5 +80,10 @@ namespace LuxyryWatch.Controllers
         {
             return PartialView();
         }
+        public ActionResult BanerPartial()
+        {
+            List<Slider> LS = db.Sliders.ToList();
+            return PartialView(LS);
+        }
     }
 }

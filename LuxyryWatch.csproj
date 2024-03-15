@@ -546,6 +546,7 @@
     <Content Include="Views\Home\MenuPartial.cshtml" />
     <Content Include="Views\SanPham\HienThiChiTietSanPham.cshtml" />
     <Content Include="Views\Home\TaiKhoanPartial.cshtml" />
+    <Content Include="Views\Home\BanerPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

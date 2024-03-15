@@ -1,23 +1,23 @@
-﻿@*@using WebBanDongHo.Models.Entities;*@
-@*@model IEnumerable<SanPham>
+﻿@using LuxyryWatch.Models;
+@model IEnumerable<SanPham>
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/Home_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
     IEnumerable<SanPhamKhuyenMai> listSPKM = (IEnumerable<SanPhamKhuyenMai>)ViewBag.listSPKM;
     IEnumerable<SanPham> listSPM = (IEnumerable<SanPham>)ViewBag.SanPhamMoi;
     ChuongTrinhKhuyenMai CTKM = (ChuongTrinhKhuyenMai)ViewBag.CTKM;
 }
-@Html.Action("BanerPartial", "Home")*@
+@Html.Action("BanerPartial", "Home")
 <!-- top Products -->
 <div class="ads-grid py-sm-5 py-4">
     <div class="container py-xl-4 py-lg-2">
         <!-- tittle heading -->
         <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
-            <span>O</span>ur
-            <span>N</span>ew
-            <span>P</span>roducts
+            <span>S</span>ản
+            <span>P</span>hẩm
+    
         </h3>
         <!-- //tittle heading -->
         <div class="row">

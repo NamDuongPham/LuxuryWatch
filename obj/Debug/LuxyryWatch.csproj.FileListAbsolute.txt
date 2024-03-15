@@ -251,3 +251,6 @@ D:\LuxuryWatch\obj\Debug\LuxyryWatch.csproj.CoreCompileInputs.cache
 D:\LuxuryWatch\obj\Debug\LuxyryWatch.csproj.CopyComplete
 D:\LuxuryWatch\obj\Debug\LuxyryWatch.dll
 D:\LuxuryWatch\obj\Debug\LuxyryWatch.pdb
+D:\LuxuryWatch\bin\CaptchaMvc.dll
+D:\LuxuryWatch\bin\CaptchaMvc.pdb
+D:\LuxuryWatch\bin\CaptchaMvc.xml

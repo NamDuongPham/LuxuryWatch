@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CaptchaMvc, Version=2.5.0.0, Culture=neutral, PublicKeyToken=fe46ad421dd3b0e6, processorArchitecture=MSIL">
+      <HintPath>packages\CaptchaMvc.Mvc5.1.5.0\lib\net45-full\CaptchaMvc.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -156,6 +159,7 @@
     <Compile Include="Models\LoaiThanhVien.cs" />
     <Compile Include="Models\LoaiThanhVien_Quyen.cs" />
     <Compile Include="Models\LuxuryWatch_DB.cs" />
+    <Compile Include="Models\MaHoa.cs" />
     <Compile Include="Models\NhaCungCap.cs" />
     <Compile Include="Models\NhaSanXuat.cs" />
     <Compile Include="Models\PhieuNhap.cs" />
@@ -547,6 +551,7 @@
     <Content Include="Views\SanPham\HienThiChiTietSanPham.cshtml" />
     <Content Include="Views\Home\TaiKhoanPartial.cshtml" />
     <Content Include="Views\Home\BanerPartial.cshtml" />
+    <Content Include="Views\Home\DangKy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

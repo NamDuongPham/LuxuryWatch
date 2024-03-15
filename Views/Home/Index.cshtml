@@ -6,8 +6,8 @@
 }
 @{
     IEnumerable<SanPhamKhuyenMai> listSPKM = (IEnumerable<SanPhamKhuyenMai>)ViewBag.listSPKM;
-    IEnumerable<SanPham> listSPM = (IEnumerable<SanPham>)ViewBag.SanPhamMoi;
-    ChuongTrinhKhuyenMai CTKM = (ChuongTrinhKhuyenMai)ViewBag.CTKM;
+    //IEnumerable<SanPham> listSPM = (IEnumerable<SanPham>)ViewBag.SanPhamMoi;
+    //ChuongTrinhKhuyenMai CTKM = (ChuongTrinhKhuyenMai)ViewBag.CTKM;
 }
 @Html.Action("BanerPartial", "Home")
 <!-- top Products -->
@@ -25,10 +25,10 @@
             <div class="agileinfo-ads-display col-lg-12">
                 <div class="wrapper">
                     <!-- first section -->
-                    @*@if (listSPKM != null)
+                    @if (listSPKM != null)
                     {
                         @Html.Partial("~/Views/Home/HienThiSanPhamKhuyenMaiPartial.cshtml", listSPKM)
-                    }*@
+                    }
 
                     <!-- //first section -->
                     <!-- second section -->

@@ -1,4 +1,5 @@
-﻿using LuxyryWatch.Models;
+﻿using CaptchaMvc.HtmlHelpers;
+using LuxyryWatch.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,9 +68,36 @@ namespace LuxyryWatch.Controllers
             Session["GioHang"] = null;
             return RedirectToAction("Index");
         }
-
+        public ActionResult DangKy()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult DangKy(ThanhVien model)
+        {
+            if (this.IsCaptchaValid("Captcha is not valid"))
+            {
+                if (ModelState.IsValid)
+                {
+                    var member = db.ThanhViens.SingleOrDefault(x => x.Email.Contains(model.Email));
+                    if (member != null)
+                    {
+                        ViewBag.loi = "Tài khoản đã tồn tại!";
+                        return View();
+                    }
+                    model.MatKhau = MaHoa.MD5Hash(model.MatKhau);
+                    model.MaLoaiTV = 2;
+                    db.ThanhViens.Add(model);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Index");
+            }
+            
+            ViewBag.loi = "Sai mã Captcha";
+            return View();
+        }
         // action hien thi san pham
-        
+
         public ActionResult MenuPartial()
         {
             ViewBag.listDMSP = db.LoaiSanPhams.ToList();

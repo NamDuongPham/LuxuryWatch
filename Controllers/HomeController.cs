@@ -56,8 +56,8 @@ namespace LuxyryWatch.Controllers
                 return Content("Tài khoản hoặc mật khẩu không chính xác!");
             }
             Session["TaiKhoan"] = result;
-           //return Content("<script>window.location.reload();</script>");
-            return RedirectToAction("Index");
+                return Content("<script>window.location.reload();</script>");
+            //return RedirectToAction("Index");
             //return  View();
         }
         // action dang xuat

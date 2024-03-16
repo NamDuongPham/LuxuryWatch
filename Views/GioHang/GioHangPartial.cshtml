@@ -1,0 +1,57 @@
+﻿@model List<LuxyryWatch.Models.ItemGioHang>
+<!-- Modal -->
+<div class="modal fade" id="giohangModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" id="giohang-dialog" role="document">
+        <div class="modal-content" id="giohangcontent">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <tbody>
+                        @if (Model.Count == 0)
+                        {
+
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.TenSP</td>
+                                    <td>@item.SoLuong</td>
+                                    <td><a href="@Url.Action("XoaItemGioHang", "GioHang", new { @MaSP = item.MaSP})"><button type="button" class="btn btn-primary">x</button></a></td>
+                                    <td>@item.ThanhTien.Value.ToString("#,##")</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @if (Model.Count > 0)
+            {
+                decimal tongtien = (decimal)ViewBag.TongTien;
+                <div class="modal-footer">
+                    <div>Tổng tiền: @tongtien.ToString("#,##")</div>
+                    <a href="@Url.Action("HienThiGioHang", "GioHang")">
+                        <input type="button" class="btn btn-success" value="Check out" />
+                    </a>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+<style>
+    #giohangcontent {
+        border: 0px solid;
+        width: 700px;
+    }
+
+    #giohang-dialog {
+        max-width: 700px;
+    }
+</style>

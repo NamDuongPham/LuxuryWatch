@@ -3,7 +3,7 @@
 @model PagedList.IPagedList<ItemSanPham>
 @{
     ViewBag.Title = "HienThiDanhSachSanPham";
-    Layout = "~/Views/Shared/Home_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
     IEnumerable<SanPhamKhuyenMai> LSPKM = (IEnumerable<SanPhamKhuyenMai>)ViewBag.LSMPK;

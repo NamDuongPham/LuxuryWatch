@@ -2,7 +2,7 @@
 @model SanPham
 @{
     ViewBag.Title = "HienThiChiTietSanPham";
-    Layout = "~/Views/Shared/Home_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
     IEnumerable<AnhSanPham> LASP = (IEnumerable<AnhSanPham>)ViewBag.AnhSP;
@@ -50,7 +50,7 @@
                 </div>
                 <div class="occasion-cart">
                     <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                        <a href="@Url.Action("ThemGioHang", "GioHang", new { @MaSP = Model.MaSP, @strUrl = Request.Url.ToString()})" class="hiengiohang"><input type="button" value="Add to cart" class="button btn"></a>
+                        <a href="@Url.Action("ThemGioHang", "GioHang", new { @MaSP = Model.MaSP, @strUrl = Request.Url.ToString()})" class="hiengiohang"><input type="button" value="Thêm vào giỏ hàng" class="button btn"></a>
                     </div>
                 </div>
             </div>

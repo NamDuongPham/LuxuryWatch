@@ -1,0 +1,55 @@
+﻿@using LuxyryWatch.Models
+@model IEnumerable<SanPhamKhuyenMai>
+@if (Model.Count() > 0)
+{
+    <div class="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mb-4">
+        <h3 class="heading-tittle text-center font-italic">Sản phẩm khuyến mãi</h3>
+        <div class="row">
+            @foreach (var item in Model.Take(3))
+            {
+                <div class="col-md-4 product-men mt-5">
+                    <div class="men-pro-item simpleCart_shelfItem">
+                        <div class="men-thumb-item text-center">
+                            @{
+                                IEnumerable<AnhSanPham> listAnhSanPham = ViewBag.AnhSanPham as IEnumerable<AnhSanPham>;
+                                IEnumerable<AnhSanPham> listAnhSanPhamByMa = listAnhSanPham.Where(x => x.MaSP == item.MaSP);
+                                if (listAnhSanPhamByMa.Count() > 0)
+                                {
+                                    AnhSanPham anhSanPham = listAnhSanPhamByMa.First();
+                                    <img src="@Url.Content("~"+anhSanPham.TenAnhSP)" alt="" style="height: 200px; width: 200px;" />
+                                }
+                                else
+                                {
+                                    <img src="~/Content/HinhAnhSP/anh-blogspot-khong-hien-thi.png" style="height: 200px; width: 200px;" />
+                                }
+                            }
+                            <div class="men-cart-pro">
+                                <div class="inner-men-cart-pro">
+                                    <a href="@Url.Action("HienThiChiTietSanPham", "SanPham", new { @MaSP = item.MaSP })" class="link-product-add-cart">Quick View</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-info-product text-center border-top mt-4">
+                            <h4 class="pt-1">
+                                <a href="@Url.Action("HienThiChiTietSanPham", "SanPham", new { @MaSP = item.MaSP })">@item.SanPham.TenSP</a>
+                            </h4>
+                            <div class="info-product-price my-2">
+                                @{ decimal dongia = (decimal)item.SanPham.DonGia;
+                                    decimal giatrigiam = (decimal)item.GiaTriGiam;
+                                    decimal giakhuyenmai = dongia * ((100 - giatrigiam) / 100);
+                                }
+                                <span class="item_price">@giakhuyenmai.ToString("#,##")</span>
+                                <del>@dongia.ToString("#,##")</del>
+                            </div>
+                            <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                <a href="@Url.Action("ThemGioHang", "GioHang", new { @MaSP = item.MaSP, @strUrl = Request.Url.ToString()})" class="hiengiohang"><input type="button" value="Add to cart" class="button btn"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+}
+

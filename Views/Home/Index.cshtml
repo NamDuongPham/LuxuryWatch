@@ -6,8 +6,8 @@
 }
 @{
     IEnumerable<SanPhamKhuyenMai> listSPKM = (IEnumerable<SanPhamKhuyenMai>)ViewBag.listSPKM;
-    //IEnumerable<SanPham> listSPM = (IEnumerable<SanPham>)ViewBag.SanPhamMoi;
-    //ChuongTrinhKhuyenMai CTKM = (ChuongTrinhKhuyenMai)ViewBag.CTKM;
+    IEnumerable<SanPham> listSPM = (IEnumerable<SanPham>)ViewBag.SanPhamMoi;
+    ChuongTrinhKhuyenMai CTKM = (ChuongTrinhKhuyenMai)ViewBag.CTKM;
 }
 @Html.Action("BanerPartial", "Home")
 <!-- top Products -->
@@ -32,24 +32,25 @@
 
                     <!-- //first section -->
                     <!-- second section -->
-                    @*@if (listSPM != null)
-                    *@
-                        @Html.Partial("~/Views/Home/HienThiSanPhamMoiPartial.cshtml")
-                    @*}*@
+                    @if (listSPM != null)
+                    {
+
+                        @Html.Partial("~/Views/Home/HienThiSanPhamMoiPartial.cshtml", listSPM)
+                    }
 
 
                     <!-- //second section -->
                     <!-- third section -->
-                    @*@if (CTKM != null)
-                    {*@
-                        @*<div class="product-sec1 product-sec2 px-sm-5 px-3">
+                    @if (CTKM != null)
+                    {
+                        <div class="product-sec1 product-sec2 px-sm-5 px-3">
                             <div class="row">
                                 <div class="col-md-8 bg-right-nut">
-                                    <img src="~/Content/images/a.jpg" alt="">
+                                    <img src="@Url.Content("~"+CTKM.Anh)" alt="">
                                 </div>
                             </div>
-                        </div>*@
-                    @*  *@
+                        </div>
+                    }
 
                     @Html.Partial("~/Views/Home/HienThiSanPhamTheoLoaiPartial.cshtml")
                     <!-- //third section -->

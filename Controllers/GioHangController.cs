@@ -124,17 +124,20 @@ namespace LuxyryWatch.Controllers
             KhachHang KH = new KhachHang();
             LoaiThanhVien ltv = null;
             double uudai = 0;
+            string temp = "";
             if (Session["TaiKhoan"] == null)
             {
                 KhachHang NKH = new KhachHang();
                 NKH.TenKH = HoTen;
                 NKH.SoDienThoai = SDT;
                 NKH.MaTV = null;
-                NKH.DiaChi = null;
+                NKH.DiaChi = DiaChi;
                 NKH.Email = Email;
+                temp = Email;
                 db.KhachHangs.Add(NKH);
                 db.SaveChanges();
                 KH = NKH;
+                
             }
             else
             {
@@ -148,6 +151,7 @@ namespace LuxyryWatch.Controllers
                     KhachHang nkh = new KhachHang();
                     nkh.TenKH = tv.Hoten;
                     nkh.Email = tv.Email;
+                    temp = tv.Email;
                     nkh.DiaChi = tv.DiaChi;
                     nkh.SoDienThoai = tv.SoDienThoai;
                     nkh.MaTV = tv.MaTV;
@@ -164,6 +168,7 @@ namespace LuxyryWatch.Controllers
             {
                 uudai = (double)ltv.uuDai;
             }
+
             //Tạo mới đơn hàng
             DonDatHang dDH = new DonDatHang();
             List<ItemGioHang> list = LayGioHang();
@@ -218,10 +223,11 @@ namespace LuxyryWatch.Controllers
             contentCustomer = contentCustomer.Replace("{{NgayDat}}", dDH.NgayDat.ToString());
             contentCustomer = contentCustomer.Replace("{{TenKhachHang}}", dDH.KhachHang.TenKH);
             contentCustomer = contentCustomer.Replace("{{Phone}}", dDH.KhachHang.SoDienThoai);
-            contentCustomer = contentCustomer.Replace("{{Email}}", dDH.KhachHang.Email);
+            contentCustomer = contentCustomer.Replace("{{Email}}",temp);
             contentCustomer = contentCustomer.Replace("{{DiaChiGiaoHang}}", dDH.KhachHang.DiaChi);
             contentCustomer = contentCustomer.Replace("{{TongTien}}", dDH.TongThanhToan.Value.ToString("#,##"));
-            GuiEmail("Xác nhận đơn hàng của hệ thống", KH.Email, "avanh090@gmail.com", "jhvpedzqhrnyamsr", contentCustomer);
+            // gia tri temp de kiem tra khach hang co phai thanh vien hay khong neu khong phai thi lay email tren form dien 
+            GuiEmail("Xác nhận đơn hàng của hệ thống", temp, "avanh090@gmail.com", "jhvpedzqhrnyamsr", contentCustomer);
             Session["gioHang"] = null;
             return RedirectToAction("HienThiGioHang");
         }

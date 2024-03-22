@@ -1,0 +1,154 @@
+﻿@model LuxyryWatch.Models.ThanhVien
+@{
+    ViewBag.Title = "ThongTinTaiKhoan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="ads-grid py-sm-5 py-4">
+    <div class="container py-xl-4 py-lg-2">
+        <h2>@Model.Hoten</h2>
+        <h3 style="color: red;">@ViewBag.ThongBao</h3>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.MaTV)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TaiKhoan, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.TaiKhoan, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TaiKhoan, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <input type="text" name="MatKhau" value="@Model.MatKhau" style="display: none;" />
+                <input type="text" name="MaLoaiTV" value="@Model.MaLoaiTV" style="display: none;" />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Hoten, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Hoten, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Hoten, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DiaChi, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SoDienThoai, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SoDienThoai, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MaLoaiTV, "Loại Thành Viên", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="text" value="@Model.LoaiThanhVien.TenLoaiTV" readonly="readonly" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-success" />
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalDMK">
+                            Đổi mật khẩu
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalDMK" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            @using (Ajax.BeginForm("DoiMatKhau", "TaiKhoan", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "thongBao" }))
+            {
+                <form class="user" id="form0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Đổi mật khẩu</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Mật khẩu cũ</label>
+                            <input type="password" name="txtMKC" class="form-control form-control-user" id="txtMKC">
+                            <span id="mkc_error" style="color: red;"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Mật khẩu mới</label>
+                            <input type="password" name="txtMKM" class="form-control form-control-user" id="txtMKM">
+                            <span id="mkm_error" style="color: red;"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Nhập lại mật khẩu</label>
+                            <input type="password" name="txtNLMK" class="form-control form-control-user" id="txtNLMK">
+                            <span id="nlmk_error" style="color: red;"></span>
+                        </div>
+                        <h4 style="color:red;" , id="thongBao"></h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="save">Save changes</button>
+                    </div>
+                </form>
+            }
+        </div>
+    </div>
+</div>
+<script>
+        $(document).ready(function () {
+            $('#save').click(function () {
+                var mkc = $.trim($('#txtMKC').val());
+                var mkm = $.trim($('#txtMKM').val());
+                var nlmk = $.trim($('#txtNLMK').val());
+                var check = true;
+                if (mkc.length <= 0) {
+                    $('#mkc_error').text('Bạn phải nhập mật khẩu');
+                    check = false;
+                }
+                else {
+                    $('#mkc_error').text('');
+                }
+                if (mkm.length <= 0) {
+                    $('#mkm_error').text('Bạn phải nhập mật khẩu mới');
+                    check = false;
+                }
+                else {
+                    $('#mkm_error').text('');
+                }
+                if (nlmk != mkm) {
+                    $('#nlmk_error').text('Mật khẩu nhập lại không đúng');
+                    check = false;
+                }
+                else {
+                    $('#nlmk_error').text('');
+                }
+                return check;
+            });
+        })
+    </script>
+
+

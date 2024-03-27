@@ -139,6 +139,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminHomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminLoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QuanLyNhaCungCapController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QuanLyNhaSanXuatController.cs" />
     <Compile Include="Controllers\GioHangController.cs" />
     <Compile Include="Controllers\GioiThieuController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -3284,6 +3287,15 @@
     <Content Include="Areas\Admin\Views\Shared\Admin_layout.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\AdminHome\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminLogin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminLogin\LoiPhanQuyen.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyNhaCungCap\DanhSachNhaCungCap.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyNhaCungCap\SuaNhaCungCap.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyNhaCungCap\ThemNhaCungCap.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyNhaSanXuat\DanhSachNhaSanXuat.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyNhaSanXuat\SuaNhaSanXuat.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyNhaSanXuat\ThemNhaSanXuat.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyNhaSanXuat\XoaNhaSanXuat.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

@@ -3296,6 +3296,7 @@
     <Content Include="Areas\Admin\Views\QuanLyNhaSanXuat\SuaNhaSanXuat.cshtml" />
     <Content Include="Areas\Admin\Views\QuanLyNhaSanXuat\ThemNhaSanXuat.cshtml" />
     <Content Include="Areas\Admin\Views\QuanLyNhaSanXuat\XoaNhaSanXuat.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyNhaCungCap\XoaNhaCungCap.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

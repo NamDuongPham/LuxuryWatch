@@ -3,6 +3,7 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -76,31 +77,82 @@ namespace LuxyryWatch.Areas.Admin.Controllers
         }
 
         // xoa nha cung cap 
+        //public ActionResult XoaNhaCungCap(int? MaNCC)
+        //{
+        //    if (MaNCC == null)
+        //    {
+        //        Response.StatusCode = 404;
+        //    }
+        //    var model = db.NhaCungCaps.SingleOrDefault(x => x.MaNCC == MaNCC);
+        //    var sanPhamTon = db.SanPhams.SingleOrDefault(x => x.MaNCC == MaNCC);
+        //    // kiem tra xem ma nha cung cap co null khong
+        //    if (model == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    // kiem tra xem con san pham nao thuoc ncc can xoa khong
+        //    if (sanPhamTon != null)
+        //    {
+        //        //return Content("<script>alert('Bạn phải xóa sản phẩm thuộc nhà cung cấp trước!'); window.location.href = '/Admin/QuanLyNhaCungCap/DanhSachNhaCungCap';</script>");
+        //        return Content("<script>window.location.reload();</script>");
+        //    }
+        //    db.NhaCungCaps.Remove(model);
+        //    db.SaveChanges();
+
+        //    //return View(model);
+        //    return Content("<script>window.location.reload();</script>");
+        //    //return Content("<script>alert('Xóa thành công nhà cung cấp!'); window.location.href = '/Admin/QuanLyNhaCungCap/DanhSachNhaCungCap';</script>");
+        //}
         public ActionResult XoaNhaCungCap(int? MaNCC)
         {
             if (MaNCC == null)
             {
-                Response.StatusCode = 404;
+                return HttpNotFound();
             }
+
             var model = db.NhaCungCaps.SingleOrDefault(x => x.MaNCC == MaNCC);
-            var sanPhamTon = db.SanPhams.SingleOrDefault(x => x.MaNCC == MaNCC);
-            // kiem tra xem ma nha cung cap co null khong
             if (model == null)
             {
                 return HttpNotFound();
             }
-            // kiem tra xem con san pham nao thuoc ncc can xoa khong
-            if (sanPhamTon != null)
+
+            // Hiển thị trang xác nhận xóa
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult XoaNhaCungCap(NhaCungCap nhaCungCap)
+        {
+            var model = db.NhaCungCaps.Find(nhaCungCap.MaNCC);
+            if (model == null)
             {
-                return Content("<script>alert('Bạn phải xóa sản phẩm thuộc nhà cung cấp trước!'); window.location.href = '/Admin/QuanLyNhaCungCap/DanhSachNhaCungCap';</script>");
-                //return Content("<script>window.location.reload();</script>");
+                return HttpNotFound();
             }
-            db.NhaCungCaps.Remove(model);
-            db.SaveChanges();
-            
-            //return View(model);
-            //return Content("<script>window.location.reload();</script>");
-            return Content("<script>alert('Xóa thành công nhà cung cấp!'); window.location.href = '/Admin/QuanLyNhaCungCap/DanhSachNhaCungCap';</script>");
+
+            try
+            {
+                db.NhaCungCaps.Remove(model);
+                db.SaveChanges();
+                return RedirectToAction("DanhSachNhaCungCap");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ThongBao = "Đã xảy ra lỗi khi xóa: " + ex.Message;
+                return View(model);
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (db != null)
+                {
+                    db.Dispose();
+                }
+                db.Dispose();
+            }
         }
     }
 }

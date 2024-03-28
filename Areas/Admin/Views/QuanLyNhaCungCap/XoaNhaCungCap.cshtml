@@ -1,0 +1,33 @@
+﻿@model LuxyryWatch.Models.NhaCungCap
+
+@{
+    ViewBag.Title = "XoaNhaCungCap";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="card shadow mb-4">
+    <div style="padding: 20px;">
+        <h2>Xác nhận xóa nhà cung cấp: @Model.TenNCC </h2>
+        <hr />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.TenNCC, "Tên nhà cung cấp", htmlAttributes: new { @class = "col-sm-2 col-form-label font-weight-bold" })
+                <div class="col-sm-10">
+                    @Html.DisplayFor(model => model.TenNCC, new { htmlAttributes = new { @class = "form-control-plaintext" } })
+                </div>
+            </div>
+
+            @Html.HiddenFor(model => model.MaNCC)
+
+            <div class="form-group row">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-danger">Xác nhận xóa</button>
+                    <a href="@Url.Action("DanhSachNhaCungCap")" class="btn btn-secondary ml-2">Hủy bỏ</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

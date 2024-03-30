@@ -27,13 +27,19 @@
             <div class="form-group row">
                 @Html.LabelFor(model => model.ThongSo, "Thông số", htmlAttributes: new { @class = "col-sm-2 col-form-label font-weight-bold" })
                 <div class="col-sm-10">
-                    @Html.DisplayFor(model => model.ThongSo, new { htmlAttributes = new { @class = "form-control-plaintext" } })
+                    @{
+                        string thongSo = Model.ThongSo.Replace("<p>", "").Replace("</p>", "");
+                    }
+                    @Html.DisplayFor(modelItem => thongSo, new { htmlAttributes = new { @class = "form-control-plaintext" } })
                 </div>
             </div>
             <div class="form-group row">
                 @Html.LabelFor(model => model.MoTa, "Mô tả", htmlAttributes: new { @class = "col-sm-2 col-form-label font-weight-bold" })
                 <div class="col-sm-10">
-                    @Html.DisplayFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control-plaintext" } })
+                    @{
+                        string MoTa = Model.MoTa.Replace("<p>", "").Replace("</p>", "");
+                    }
+                    @Html.DisplayFor(modelItem => MoTa, new { htmlAttributes = new { @class = "form-control-plaintext" } })
                 </div>
             </div>
             

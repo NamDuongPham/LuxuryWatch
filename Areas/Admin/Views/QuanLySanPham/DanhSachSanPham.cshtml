@@ -64,7 +64,11 @@
                                 }
                             </td>
                             <td>@item.SoLuongTon</td>
-                            <td>@item.DonGia</td>
+                            @{
+                                decimal donGiaNhap = (decimal)(item.DonGia);
+                            }
+
+                            <td>@donGiaNhap.ToString("#,##")</td>
                             <td>
                                 <a href="@Url.Action("SuaSanPham", "QuanLySanPham", new { @MaSP = item.MaSP })">Sửa</a>
                                 |

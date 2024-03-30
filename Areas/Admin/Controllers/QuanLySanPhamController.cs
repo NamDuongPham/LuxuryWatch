@@ -84,8 +84,9 @@ namespace LuxyryWatch.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                sanpham.NgayCapNhat = DateTime.Now;
+                sanpham.NgayCapNhat = DateTime.Now;       
                 db.Entry(sanpham).State = System.Data.Entity.EntityState.Modified;
+                sanpham.TenSP = sanpham.TenSP.Replace("<p>", "").Replace("</p>", "");
                 db.SaveChanges();
                 List<AnhSanPham> anhsanpham = db.AnhSanPhams.Where(x => x.MaSP == sanpham.MaSP).ToList();
                 foreach (AnhSanPham item in anhsanpham)
@@ -119,14 +120,38 @@ namespace LuxyryWatch.Areas.Admin.Controllers
                 Response.StatusCode = 404;
             }
             var model = db.SanPhams.SingleOrDefault(x => x.MaSP == MaSP);
+             model.TenSP = model.TenSP.Replace("<p>", "").Replace("</p>", "");
             if (model == null)
             {
                 return HttpNotFound();
             }
-            db.SanPhams.Remove(model);
-            db.SaveChanges();
+
+            //db.SanPhams.Remove(model);
+            //db.SaveChanges();
             //return Content("<script>window.location.reload();</script>");
-            return RedirectToAction("DanhSachSanPham");
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult XoaSanPham(SanPham sanPham)
+        {
+            var model = db.SanPhams.Find(sanPham.MaSP);
+            if (model == null)
+            {
+                return HttpNotFound();
+            }
+
+            try
+            {
+                db.SanPhams.Remove(model);
+                db.SaveChanges();
+                return RedirectToAction("DanhSachSanPham");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ThongBao = "Đã xảy ra lỗi khi xóa: " + ex.Message;
+                return View(model);
+            }
         }
         protected override void Dispose(bool disposing)
         {

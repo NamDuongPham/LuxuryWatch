@@ -1,0 +1,106 @@
+﻿@using PagedList.Mvc
+@using LuxyryWatch.Models
+@model PagedList.IPagedList<PhieuNhap>
+@{
+    ViewBag.Title = "DanhSachPhieuNhap";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Quản lý phiếu nhập</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã phiếu nhập</th>
+                        <th>Nhà cung cấp</th>
+                        <th>Ngày lập</th>
+                        <th>Tổng tiền</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row_@item.MaPN">
+                            <td>@item.MaPN</td>
+                            <td>@item.NhaCungCap.TenNCC</td>
+                            <td>
+                                @if (item.NgayLap != null)
+                                {
+                                    @item.NgayLap.Value.ToString("dd/MM/yyyy")
+                                }
+
+                            </td>
+                            @{
+                                decimal tongTien = 0;
+                                IEnumerable<ChiTietPhieuNhap> listChiTietPhieuNhap = ViewBag.ChiTietPhieuNhaps as IEnumerable<ChiTietPhieuNhap>;
+                                IEnumerable<ChiTietPhieuNhap> listChiTietPhieuNhapByMa = listChiTietPhieuNhap.Where(x => x.MaPN == item.MaPN);
+                                if (listChiTietPhieuNhapByMa.Count() > 0)
+                                {
+                                    foreach (var itemct in listChiTietPhieuNhapByMa)
+                                    {
+                                        decimal thanhTien = (decimal)(itemct.SoLuongNhap * itemct.DonGiaNhap);
+                                        tongTien += thanhTien;
+                                    }
+                                }
+                            }
+                            <td>@tongTien.ToString("#,##") </td>
+                            <td>
+                                <a href="@Url.Action("ChiTietPhieuNhap", "QuanLyNhapHang", new { @MaPN = item.MaPN })">Chi tiết</a>
+                                |
+                                @Ajax.ActionLink("Xóa", "XoaPhieuNhap", new { @MaPN = item.MaPN }, new AjaxOptions
+                                {
+                               Confirm = "Bạn có muốn xóa bản gi này?",
+                               OnComplete = "$('#row_" + @item.MaPN + "').remove()",
+                               OnSuccess = "location.reload()"
+                           })
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <div>
+            @Html.PagedListPager(Model, Page => Url.Action("DanhSachPhieuNhap", new
+       {
+           page = Page
+       }), new PagedListRenderOptions
+       {
+           LiElementClasses = new string[] { "item" },
+
+       })
+        </div>
+    </div>
+
+</div>
+<style>
+    .item {
+        height: 30px;
+        width: 30px;
+        padding-top: 2px;
+        border: 0.5px solid pink;
+        text-align: center;
+        border-radius: 3px;
+    }
+
+        .item a {
+            color: black;
+            text-decoration: none;
+        }
+
+    .pagination .active {
+        background-color: #337AB7;
+        color: white;
+    }
+
+    .item:hover {
+        background-color: #EEEEEE;
+    }
+</style>
+

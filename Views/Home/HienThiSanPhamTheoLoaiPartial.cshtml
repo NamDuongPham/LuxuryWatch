@@ -1,4 +1,4 @@
-﻿@*@using WebBanDongHo.Models.Entities
+﻿@using LuxyryWatch.Models
 @{
     IEnumerable<LoaiSanPham> loaiSanPhams = (IEnumerable<LoaiSanPham>)ViewBag.LoaiSanPham;
     IEnumerable<SanPham> sanPhams = (IEnumerable<SanPham>)ViewBag.SanPhamTheoLoai;
@@ -6,51 +6,51 @@
 @if (loaiSanPhams != null)
 {
     foreach (var groupItem in loaiSanPhams)
-    {*@
+    {
         <div class="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mb-4">
-            <h3 class="heading-tittle text-center font-italic">Nam</h3>
+            <h3 class="heading-tittle text-center font-italic">@groupItem.TenLoaiSP</h3>
             <div class="row">
-                @*@foreach (var item in sanPhams.Where(x => x.MaLoaiSP == groupItem.MaLoaiSP).Take(3))
-                {*@
+                @foreach (var item in sanPhams.Where(x => x.MaLoaiSP == groupItem.MaLoaiSP).Take(3))
+                {
                     <div class="col-md-4 product-men mt-5">
                         <div class="men-pro-item simpleCart_shelfItem">
                             <div class="men-thumb-item text-center">
-                                @*@{
+                                @{
                                     IEnumerable<AnhSanPham> listAnhSanPham = ViewBag.AnhSanPham as IEnumerable<AnhSanPham>;
                                     IEnumerable<AnhSanPham> listAnhSanPhamByMa = listAnhSanPham.Where(x => x.MaSP == item.MaSP);
                                     if (listAnhSanPhamByMa.Count() > 0)
                                     {
-                                        AnhSanPham anhSanPham = listAnhSanPhamByMa.First();*@
-                                        <img src="~/Content/HinhAnhSP/files/AriesGoldAG-L5032ZG-W-L-2.jpg" alt="" style="height: 200px; width: 200px;" />
-                                    @*}*@
-                                    @*else
+                                        AnhSanPham anhSanPham = listAnhSanPhamByMa.First();
+                                        <img src="@Url.Content("~"+anhSanPham.TenAnhSP)" alt="" style="height: 200px; width: 200px;" />
+                                    }
+                                    else
                                     {
                                         <img src="~/Content/HinhAnhSP/anh-blogspot-khong-hien-thi.png" style="height: 200px; width: 200px;" />
-                                    }*@
-                                @*}*@
+                                    }
+                                }
                                 <div class="men-cart-pro">
                                     <div class="inner-men-cart-pro">
-                                        <a href="@Url.Action("HienThiChiTietSanPham", "SanPham")" class="link-product-add-cart">Xem Ngay</a>
+                                        <a href="@Url.Action("HienThiChiTietSanPham", "SanPham", new { @MaSP = item.MaSP })" class="link-product-add-cart">Quick View</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="item-info-product text-center border-top mt-4">
                                 <h4 class="pt-1">
-                                    <a href="@Url.Action("HienThiChiTietSanPham", "SanPham")">Dong Ho Thanh Lich</a>
+                                    <a href="@Url.Action("HienThiChiTietSanPham", "SanPham", new { @MaSP = item.MaSP })">@item.TenSP</a>
                                 </h4>
                                 <div class="info-product-price my-2">
-                                    <span class="item_price">$5.000.000</span>
+                                    <span class="item_price">@item.DonGia.Value.ToString("#,##")</span>
                                 </div>
                                 <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                    <a href="@Url.Action("ThemGioHang", "GioHang")" class="hiengiohang"><input type="button" value="Thêm Vào Giỏ" class="button btn"></a>
+                                    <a href="@Url.Action("ThemGioHang", "GioHang", new { @MaSP = item.MaSP, @strUrl = Request.Url.ToString()})" class="hiengiohang"><input type="button" value="Add to cart" class="button btn"></a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                @*}*@
+                }
 
             </div>
         </div>
-  
+    }
 
-
+}

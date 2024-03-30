@@ -118,7 +118,7 @@
         </div>
     </div>
 </div>
-@*<script>
+<script>
         $(document).ready(function () {
             $('#save').click(function () {
                 var mkc = $.trim($('#txtMKC').val());
@@ -149,40 +149,6 @@
                 return check;
             });
         })
-    </script>*@
-<script>
-    $(document).ready(function () {
-        $('#form0').submit(function (event) {
-            event.preventDefault(); // Ngăn chặn sự kiện mặc định của form
-
-            // Lấy dữ liệu từ form
-            var formData = {
-                txtMKC: $('#txtMKC').val(),
-                txtMKM: $('#txtMKM').val(),
-                txtNLMK: $('#txtNLMK').val()
-            };
-
-            // Gửi yêu cầu AJAX
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("DoiMatKhau", "TaiKhoan")',
-                data: formData,
-                success: function (response) {
-                    if (response.success) {
-                        // Thành công, làm gì đó, ví dụ chuyển hướng hoặc hiển thị thông báo
-                        window.location.reload(); // Reload trang
-                    } else {
-                        // Thất bại, hiển thị thông báo lỗi
-                        alert(response.message);
-                    }
-                },
-                error: function () {
-                    // Xử lý lỗi nếu có
-                    alert('Đã xảy ra lỗi khi gửi yêu cầu!');
-                }
-            });
-        });
-    });
-</script>
+    </script>
 
 

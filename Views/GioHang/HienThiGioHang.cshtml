@@ -1,0 +1,144 @@
+﻿﻿@using LuxyryWatch.Models
+@model List<LuxyryWatch.Models.ItemGioHang>
+@{
+    ViewBag.Title = "HienThiGioHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    int x = 0;
+}
+@if (Model.Count == 0)
+{
+    <center><h1 style="color: red;">Giỏ hàng trống</h1></center>
+}
+else
+{
+    <div class="privacy py-sm-5 py-4">
+        <div class="container py-xl-4 py-lg-2">
+            <!-- tittle heading -->
+            <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+                <span>T</span>hanh
+                <span>T</span>oán
+            </h3>
+            <!-- //tittle heading -->
+            <div class="checkout-right">
+                <h4 class="mb-sm-4 mb-3">
+                    Your shopping cart contains:
+                    <span>@Model.Count() sản phẩm</span>
+                </h4>
+                <div class="table-responsive">
+                    <table class="timetable_sub">
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Tên sản phẩm</th>
+
+                                <th>Giá</th>
+                                <th>Xóa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                x++;
+                                <tr class="@Url.Content("rem"+x)">
+                                    <td class="invert-image">
+                                        @if (item.HinhAnh != null)
+                                        {
+                                            <a href="single.html">
+                                                <img src="@Url.Content("~" + item.HinhAnh)" alt=" " class="img-responsive" style="height: 100px; width: 100px;">
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="single.html">
+                                                <img src="~/Content/HinhAnhSP/anh-blogspot-khong-hien-thi.png" alt=" " class="img-responsive" style="height: 100px; width: 100px;">
+                                            </a>
+                                        }
+                                    </td>
+                                    <td class="invert">
+                                        <div class="quantity">
+                                            <div class="quantity-select">
+                                                <div class="entry value">
+                                                    <span>@item.SoLuong</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="invert">@item.TenSP</td>
+                                    <td class="invert">@item.ThanhTien.Value.ToString("#,##")</td>
+                                    <td class="invert">
+                                        <div class="rem">
+                                            <a href="@Url.Action("XoaItemGioHang", "GioHang", new { @MaSP = item.MaSP})">
+                                                <div class="close1"> </div>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+                <div style="width: 100%; text-align: left;">
+                    <br />
+                    <h3>Tổng đơn hàng: @Model.Sum(y => y.ThanhTien).Value.ToString("#,##")</h3>
+                    @if (ViewBag.uuDai > 0)
+                    {
+                        decimal UuDai = (decimal)ViewBag.uuDai;
+                        decimal TongTien = (decimal)Model.Sum(z => z.ThanhTien);
+                        decimal TongThanhToan = (decimal)TongTien * ((100 - UuDai) / 100);
+                        <h3>Ưu đãi: @ViewBag.uuDai%</h3>
+                        <h3>Tổng thanh toán: @TongThanhToan.ToString("#,##")</h3>
+                    }
+
+                </div>
+            </div>
+            <div class="checkout-left">
+                <div class="address_form_agile mt-sm-5 mt-4">
+                    <h4 class="mb-sm-4 mb-3">Add a new Details</h4>
+                    @using (Html.BeginForm("DatHang", "GioHang"))
+                    {
+                        <form action="payment.html" method="post" class="creditly-card-form agileinfo_form">
+                            <div class="creditly-wrapper wthree, w3_agileits_wrapper">
+                                <div class="information-wrapper">
+                                    <div class="first-row">
+                                        <div class="controls form-group">
+                                            <input class="billing-address-name form-control" type="text" name="HoTen" placeholder="Họ Tên" required="" value="@ViewBag.Hoten">
+                                        </div>
+                                        <div class="w3_agileits_card_number_grids">
+                                            <div class="w3_agileits_card_number_grid_left form-group">
+                                                <div class="controls">
+                                                    <input type="text" class="form-control" placeholder="Số điện thoại" name="SDT" required="" value="@ViewBag.SDT">
+                                                </div>
+                                            </div>
+                                            <div class="w3_agileits_card_number_grid_left form-group">
+                                                <div class="controls">
+                                                    <input type="text" class="form-control" placeholder="Email" name="Email" required="" value="@ViewBag.Email">
+                                                </div>
+                                            </div>
+                                            <div class="w3_agileits_card_number_grid_right form-group">
+                                                <div class="controls">
+                                                    <input type="text" class="form-control" placeholder="Địa chỉ nhận hàng" name="DiaChi" required="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="controls form-group">
+                                            <input type="text" class="form-control" placeholder="Ghi chú" name="GhiChu" required="">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="submit check_out btn">Đặt hàng</button>
+                                </div>
+                            </div>
+                        </form>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+

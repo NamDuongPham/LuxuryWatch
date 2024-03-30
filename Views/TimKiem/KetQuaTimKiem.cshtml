@@ -1,0 +1,279 @@
+﻿﻿@using PagedList.Mvc
+@using LuxyryWatch.Models
+@model PagedList.IPagedList<SanPham>
+@{
+    ViewBag.Title = "KetQuaTimKiem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    IEnumerable<SanPhamKhuyenMai> LSPKM = (IEnumerable<SanPhamKhuyenMai>)ViewBag.LSMPK;
+}
+<div class="ads-grid py-sm-5 py-4">
+    <div class="container py-xl-4 py-lg-2">
+        <div class="row">
+            <!-- product left -->
+            <div class="agileinfo-ads-display col-lg-12">
+                <div class="wrapper">
+                    <!-- first section -->
+                    <div class="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mb-4">
+                        <div class="row">
+                            @foreach (var item in Model.Take(3))
+                            {
+                                <div class="col-md-4 product-men mt-md-0 mt-5">
+                                    <div class="men-pro-item simpleCart_shelfItem">
+                                        <div class="men-thumb-item text-center">
+                                            @{
+                                                IEnumerable<AnhSanPham> listAnhSanPham = ViewBag.AnhSanPham as IEnumerable<AnhSanPham>;
+                                                IEnumerable<AnhSanPham> listAnhSanPhamByMa = listAnhSanPham.Where(x => x.MaSP == item.MaSP);
+                                                if (listAnhSanPhamByMa.Count() > 0)
+                                                {
+                                                    AnhSanPham anhSanPham = listAnhSanPhamByMa.First();
+                                                    <img src="@Url.Content("~"+anhSanPham.TenAnhSP)" alt="" style="height: 200px; width: 200px;" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/Content/HinhAnhSP/anh-blogspot-khong-hien-thi.png" style="height: 200px; width: 200px;" />
+                                                }
+                                            }
+                                            @*<img src="~/Content/images/m2.jpg" alt="">*@
+                                            <div class="men-cart-pro">
+                                                <div class="inner-men-cart-pro">
+                                                    <a href="@Url.Action("HienThiChiTietSanPham", "SanPham", new { @MaSP = item.MaSP })" class="link-product-add-cart">Quick View</a>
+                                                </div>
+                                            </div>
+                                            @if (item.Moi == true)
+                                            {
+                                                <span class="product-new-top">New</span>
+                                            }
+                                        </div>
+                                        <div class="item-info-product text-center border-top mt-4">
+                                            <h4 class="pt-1">
+                                                <a href="single.html">@item.TenSP</a>
+                                            </h4>
+                                            @if (LSPKM == null)
+                                            {
+                                                <div class="info-product-price my-2">
+                                                    <span class="item_price">@item.DonGia.Value.ToString("#,##")</span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                SanPhamKhuyenMai SPKM = LSPKM.SingleOrDefault(x => x.MaSP == item.MaSP);
+                                                if (SPKM != null)
+                                                {
+                                                    decimal giatrigiam = (decimal)SPKM.GiaTriGiam;
+                                                    decimal giakhuyenmai = (decimal)item.DonGia * ((100 - giatrigiam) / 100);
+                                                    <div class="info-product-price my-2">
+                                                        <span class="item_price">@giakhuyenmai.ToString("#,##")</span>
+                                                        <del>@item.DonGia.Value.ToString("#,##")</del>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="info-product-price my-2">
+                                                        <span class="item_price">@item.DonGia.Value.ToString("#,##")</span>
+                                                    </div>
+                                                }
+                                            }
+
+                                            <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                                <a href="@Url.Action("ThemGioHang", "GioHang", new { @MaSP = item.MaSP, @strUrl = Request.Url.ToString() })" class="hiengiohang"><input type="submit" name="submit" value="Add to cart" class="button btn"></a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <!-- //first section -->
+                    <!-- second section -->
+                    @if (Model.Count() > 3)
+                    {
+                        <div class="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mb-4">
+                            <div class="row">
+                                @foreach (var item in Model.Skip(3).Take(3))
+                                {
+                                    <div class="col-md-4 product-men mt-md-0 mt-5">
+                                        <div class="men-pro-item simpleCart_shelfItem">
+                                            <div class="men-thumb-item text-center">
+                                                @{
+                                                    IEnumerable<AnhSanPham> listAnhSanPham = ViewBag.AnhSanPham as IEnumerable<AnhSanPham>;
+                                                    IEnumerable<AnhSanPham> listAnhSanPhamByMa = listAnhSanPham.Where(x => x.MaSP == item.MaSP);
+                                                    if (listAnhSanPhamByMa.Count() > 0)
+                                                    {
+                                                        AnhSanPham anhSanPham = listAnhSanPhamByMa.First();
+                                                        <img src="@Url.Content("~" + anhSanPham.TenAnhSP)" alt="" style="height: 200px; width: 200px;" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/Content/HinhAnhSP/anh-blogspot-khong-hien-thi.png" style="height: 200px; width: 200px;" />
+                                                    }
+                                                }
+                                                @*<img src="~/Content/images/m2.jpg" alt="">*@
+                                                <div class="men-cart-pro">
+                                                    <div class="inner-men-cart-pro">
+                                                        <a href="@Url.Action("HienThiChiTietSanPham", "SanPham", new { @MaSP = item.MaSP })" class="link-product-add-cart">Quick View</a>
+                                                    </div>
+                                                </div>
+                                                @if (item.Moi == true)
+                                                {
+                                                    <span class="product-new-top">New</span>
+                                                }
+                                            </div>
+                                            <div class="item-info-product text-center border-top mt-4">
+                                                <h4 class="pt-1">
+                                                    <a href="single.html">@item.TenSP</a>
+                                                </h4>
+                                                @if (LSPKM == null)
+                                                {
+                                                    <div class="info-product-price my-2">
+                                                        <span class="item_price">@item.DonGia.Value.ToString("#,##")</span>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    SanPhamKhuyenMai SPKM = LSPKM.SingleOrDefault(x => x.MaSP == item.MaSP);
+                                                    if (SPKM != null)
+                                                    {
+                                                        decimal giatrigiam = (decimal)SPKM.GiaTriGiam;
+                                                        decimal giakhuyenmai = (decimal)item.DonGia * ((100 - giatrigiam) / 100);
+                                                        <div class="info-product-price my-2">
+                                                            <span class="item_price">@giakhuyenmai.ToString("#,##")</span>
+                                                            <del>@item.DonGia.Value.ToString("#,##")</del>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="info-product-price my-2">
+                                                            <span class="item_price">@item.DonGia.Value.ToString("#,##")</span>
+                                                        </div>
+                                                    }
+
+                                                }
+
+                                                <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                                    <a href="@Url.Action("ThemGioHang", "GioHang", new { @MaSP = item.MaSP, @strUrl = Request.Url.ToString() })" class="hiengiohang"><input type="submit" name="submit" value="Add to cart" class="button btn"></a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                    <!-- //second section -->
+                    <!-- 3rd section -->
+                    @if (Model.Count() > 6)
+                    {
+                        <div class="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mt-4">
+                            <div class="row">
+                                @foreach (var item in Model.Skip(6).Take(3))
+                                {
+                                    <div class="col-md-4 product-men mt-md-0 mt-5">
+                                        <div class="men-pro-item simpleCart_shelfItem">
+                                            <div class="men-thumb-item text-center">
+                                                @{
+                                                    IEnumerable<AnhSanPham> listAnhSanPham = ViewBag.AnhSanPham as IEnumerable<AnhSanPham>;
+                                                    IEnumerable<AnhSanPham> listAnhSanPhamByMa = listAnhSanPham.Where(x => x.MaSP == item.MaSP);
+                                                    if (listAnhSanPhamByMa.Count() > 0)
+                                                    {
+                                                        AnhSanPham anhSanPham = listAnhSanPhamByMa.First();
+                                                        <img src="@Url.Content("~" + anhSanPham.TenAnhSP)" alt="" style="height: 200px; width: 200px;" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/Content/HinhAnhSP/anh-blogspot-khong-hien-thi.png" style="height: 200px; width: 200px;" />
+                                                    }
+                                                }
+                                                @*<img src="~/Content/images/m2.jpg" alt="">*@
+                                                <div class="men-cart-pro">
+                                                    <div class="inner-men-cart-pro">
+                                                        <a href="@Url.Action("HienThiChiTietSanPham", "SanPham", new { @MaSP = item.MaSP })" class="link-product-add-cart">Quick View</a>
+                                                    </div>
+                                                </div>
+                                                @if (item.Moi == true)
+                                                {
+                                                    <span class="product-new-top">New</span>
+                                                }
+                                            </div>
+                                            <div class="item-info-product text-center border-top mt-4">
+                                                <h4 class="pt-1">
+                                                    <a href="single.html">@item.TenSP</a>
+                                                </h4>
+                                                @if (LSPKM == null)
+                                                {
+                                                    <div class="info-product-price my-2">
+                                                        <span class="item_price">@item.DonGia.Value.ToString("#,##")</span>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    SanPhamKhuyenMai SPKM = LSPKM.SingleOrDefault(x => x.MaSP == item.MaSP);
+                                                    if (SPKM != null)
+                                                    {
+                                                        decimal giatrigiam = (decimal)SPKM.GiaTriGiam;
+                                                        decimal giakhuyenmai = (decimal)item.DonGia * ((100 - giatrigiam) / 100);
+                                                        <div class="info-product-price my-2">
+                                                            <span class="item_price">@giakhuyenmai.ToString("#,##")</span>
+                                                            <del>@item.DonGia.Value.ToString("#,##")</del>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="info-product-price my-2">
+                                                            <span class="item_price">@item.DonGia.Value.ToString("#,##")</span>
+                                                        </div>
+                                                    }
+
+                                                }
+
+                                                <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                                    <a href="@Url.Action("ThemGioHang", "GioHang", new { @MaSP = item.MaSP, @strUrl = Request.Url.ToString() })" class="hiengiohang"><input type="submit" name="submit" value="Add to cart" class="button btn"></a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                    <!-- //3rd section -->
+                    <!-- fourth section -->
+                    <!-- //fourth section -->
+                    <div>
+                        @Html.PagedListPager(Model, Page => Url.Action("KetQuaTimKiem", new { page = Page, @txtTuKhoa = @ViewBag.txtTuKhoa, }), new PagedListRenderOptions { LiElementClasses = new string[] { "item" }, })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .item {
+        height: 30px;
+        width: 30px;
+        padding-top: 2px;
+        border: 0.5px solid pink;
+        text-align: center;
+        border-radius: 3px;
+    }
+
+        .item a {
+            color: black;
+            text-decoration: none;
+        }
+
+    .pagination .active {
+        background-color: #337AB7;
+        color: white;
+    }
+
+    .item:hover {
+        background-color: #EEEEEE;
+    }
+</style>
+

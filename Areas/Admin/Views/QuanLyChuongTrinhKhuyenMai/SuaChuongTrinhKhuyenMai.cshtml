@@ -1,0 +1,97 @@
+﻿@model LuxyryWatch.Models.ChuongTrinhKhuyenMai
+
+@{
+    ViewBag.Title = "SuaChuongTrinhKhuyenMai";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<script src="~/Areas/Admin/Content/ckeditor/ckeditor.js"></script>
+<script src="~/Areas/Admin/Content/ckfinder/ckfinder.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#selectImg").click(function () {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (fileUrl) {
+                $("#linkImg").val(fileUrl);
+                document.images['Anh'].src = fileUrl;
+            };
+            finder.popup();
+        });
+
+    });
+
+</script>
+
+<div class="card shadow mb-4">
+    <div style="padding: 10px;">
+        <h2>Cập nhật thông tin chương trình khuyến mãi: @Model.TenCTKM</h2>
+        <h3 style="color:red;">@ViewBag.ThongBao</h3>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.MaCTKM)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TenCTKM, htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.TenCTKM, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TenCTKM, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SoLuongSanPham, htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SoLuongSanPham, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SoLuongSanPham, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NgayBatDau, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <input type="date" name="NgayBatDau" value="@Model.NgayBatDau.Value.ToString("yyyy-MM-dd")" />
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NGgayKetThuc, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <input type="date" name="NGgayKetThuc" value="@Model.NGgayKetThuc.Value.ToString("yyyy-MM-dd")" />
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ApDung, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.ApDung)
+                            @Html.ValidationMessageFor(model => model.ApDung, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Anh, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <button type="button" class="btn btn-primary" id="selectImg">Chọn ảnh</button>
+                        <br />
+                        <input type="text" id="linkImg" name="Anh" style="display:none;" value="@Model.Anh">
+                        <img name="Anh" style="width:200px;" src="@Url.Content("~"+Model.Anh)">
+                        @Html.ValidationMessageFor(model => model.Anh, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div>
+            @Html.ActionLink("Quay lại", "DanhSachChuongTrinhKhuyenMai")
+        </div>
+    </div>
+</div>

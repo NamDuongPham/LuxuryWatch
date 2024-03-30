@@ -1,0 +1,122 @@
+﻿﻿@using PagedList.Mvc
+@using LuxyryWatch.Models
+@model PagedList.IPagedList<SanPham>
+@{
+    ViewBag.Title = "DanhSachSanPham";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_layout.cshtml";
+}
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Quản lý sản phẩm</h6>
+    </div>
+    <div class="col-md-4">
+        <br />
+        @using (Html.BeginForm("DanhSachSanPham", "QuanLySanPham"))
+        {
+            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="@ViewBag.search" name="search">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+                <a href="@Url.Action("ThemSanPham", "QuanLySanPham")" type="submit" class="btn btn-success">Thêm mới</a>
+            </form>
+
+        }
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Hình ảnh</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row_@item.MaSP">
+                            <td>@item.MaSP</td>
+                            <td>@item.TenSP</td>
+                            <td>
+                                @{
+                                    IEnumerable<AnhSanPham> listAnhSanPham = ViewBag.AnhSanPham as IEnumerable<AnhSanPham>;
+                                    IEnumerable<AnhSanPham> listAnhSanPhamByMa = listAnhSanPham.Where(x => x.MaSP == item.MaSP);
+                                    if (listAnhSanPhamByMa.Count() > 0)
+                                    {
+                                        AnhSanPham anhSanPham = listAnhSanPhamByMa.First();
+                                        <img src="@Url.Content("~"+anhSanPham.TenAnhSP)" style="width: 150px;" />
+                                    }
+                                    else
+                                    {
+                                        <img src="x" style="width: 150px;" />
+                                    }
+                                }
+                            </td>
+                            <td>@item.SoLuongTon</td>
+                            <td>@item.DonGia</td>
+                            <td>
+                                <a href="@Url.Action("SuaSanPham", "QuanLySanPham", new { @MaSP = item.MaSP })">Sửa</a>
+                                |
+                                @Ajax.ActionLink("Xóa", "XoaSanPham", new { @MaSP = item.MaSP }, new AjaxOptions
+                                {
+                               Confirm = "Bạn có muốn xóa bản gi này?",
+                               OnComplete = "$('#row_" + @item.MaSP + "').remove()",
+                               OnSuccess = "location.reload()"
+                           })
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <div>
+            @Html.PagedListPager(Model, Page => Url.Action("DanhSachSanPham", new
+       {
+           page = Page,
+           @search = @ViewBag.search
+       }), new PagedListRenderOptions
+       {
+           LiElementClasses = new string[] { "item" },
+
+       })
+        </div>
+    </div>
+
+</div>
+<style>
+    .item {
+        height: 30px;
+        width: 30px;
+        padding-top: 2px;
+        border: 0.5px solid pink;
+        text-align: center;
+        border-radius: 3px;
+    }
+
+        .item a {
+            color: black;
+            text-decoration: none;
+        }
+
+    .pagination .active {
+        background-color: #337AB7;
+        color: white;
+    }
+
+    .item:hover {
+        background-color: #EEEEEE;
+    }
+</style>
+

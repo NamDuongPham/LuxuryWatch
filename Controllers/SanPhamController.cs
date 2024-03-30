@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using PagedList;
 
-namespace WebBanDongHo.Controllers
+namespace LuxyryWatch.Controllers
 {
     public class SanPhamController : Controller
     {

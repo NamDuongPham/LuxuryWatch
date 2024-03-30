@@ -1,0 +1,60 @@
+﻿@using LuxyryWatch.Models;
+@model IEnumerable<SanPhamKhuyenMai>
+@{
+    ViewBag.Title = "DanhSachSanPhamKhuyenMai";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách sản phẩm khuyến mãi</h6>
+    </div>
+    <div class="col-md-4">
+        <br />
+        @using (Html.BeginForm("DanhSachChuongTrinhKhuyenMai", "QuanLyChuongTrinhKhuyenMai"))
+        {
+            <a href="@Url.Action("ThemSanPhamKhuyenMai", "QuanLySanPhamKhuyenMai", new { @MaCTKM = @ViewBag.MaCTKM }) " type="submit" class="btn btn-success">Thêm mới</a>
+        }
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá trị giảm</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row_@item.MaSP">
+                            <td>@item.MaSP</td>
+                            <td>@item.SanPham.TenSP</td>
+                            <td>@item.GiaTriGiam%</td>
+                            <td>
+                                <a href="@Url.Action("SuaSanPhamKhuyenMai", "QuanLySanPhamKhuyenMai", new { @MaSPKM = item.MaSPKM })">Sửa</a>
+                                |
+                                @Ajax.ActionLink("Xóa", "XoaSanPhamKhuyenMai", new { @MaSPKM = item.MaSPKM }, new AjaxOptions
+                                {
+                               Confirm = "Bạn có muốn xóa nhà cung cấp này?",
+                               OnComplete = "$('#row_" + item.MaSP + "').remove()",
+                               OnSuccess = "location.reload()"
+                           })
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+
+

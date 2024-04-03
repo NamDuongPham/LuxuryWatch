@@ -58,14 +58,13 @@ namespace LuxyryWatch.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult SuaChuongTrinhKhuyenMai(int? MaCKTM)
+        public ActionResult SuaChuongTrinhKhuyenMai(int? MaCTKM)
         {
-            if (MaCKTM == null)
+            if (MaCTKM == null)
             {
                 Response.StatusCode = 404;
             }
-
-            var model = db.ChuongTrinhKhuyenMais.SingleOrDefault(x => x.MaCTKM == MaCKTM);
+            var model = db.ChuongTrinhKhuyenMais.SingleOrDefault(x => x.MaCTKM == MaCTKM);
             if (model == null)
             {
                 return HttpNotFound();
@@ -74,6 +73,7 @@ namespace LuxyryWatch.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        //[ValidateAntiForgeryToken]
         public ActionResult SuaChuongTrinhKhuyenMai(ChuongTrinhKhuyenMai chuongTrinhKhuyenMai)
         {
             if (ModelState.IsValid)
@@ -97,22 +97,6 @@ namespace LuxyryWatch.Areas.Admin.Controllers
             ViewBag.ThongBao = "Có lỗi xảy ra!";
             return View();
         }
-
-        //public ActionResult XoaChuongTrinhKhuyenMai(int? MaCTKM)
-        //{
-        //    if (MaCTKM == null)
-        //    {
-        //        Response.StatusCode = 404;
-        //    }
-        //    var model = db.ChuongTrinhKhuyenMais.SingleOrDefault(x => x.MaCTKM == MaCTKM);
-        //    if (model == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    db.ChuongTrinhKhuyenMais.Remove(model);
-        //    db.SaveChanges();
-        //    return Content("<script>window.location.reload();</script>");
-        //}
 
         public ActionResult XoaChuongTrinhKhuyenMai(int? MaCTKM)
         {

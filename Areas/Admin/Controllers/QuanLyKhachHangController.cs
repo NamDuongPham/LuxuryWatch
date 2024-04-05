@@ -10,7 +10,8 @@ using System.Web.Mvc;
 
 namespace LuxyryWatch.Areas.Admin.Controllers
 {
-    public class QuanLyKhachHangController : Controller
+    [Authorize(Roles = "Admin")]
+    public class QuanLyKhachHangController : AdminBaseController
     {
         LuxuryWatch_DB db = new LuxuryWatch_DB();
 

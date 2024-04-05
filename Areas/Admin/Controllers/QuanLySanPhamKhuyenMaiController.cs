@@ -8,7 +8,8 @@ using System.Web.Mvc;
 
 namespace LuxyryWatch.Areas.Admin.Controllers
 {
-    public class QuanLySanPhamKhuyenMaiController : Controller
+    [Authorize(Roles = "Admin")]
+    public class QuanLySanPhamKhuyenMaiController : AdminBaseController
     {
         // GET: Admin/QuanLySanPhamKhuyenMai
         LuxuryWatch_DB db = new LuxuryWatch_DB();

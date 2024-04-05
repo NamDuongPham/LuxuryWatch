@@ -120,7 +120,7 @@ namespace LuxyryWatch.Controllers
                         return View();
                     }
                     model.MatKhau = MaHoa.MD5Hash(model.MatKhau);
-                    model.MaLoaiTV = 2;
+                    model.MaLoaiTV = 1;
                     db.ThanhViens.Add(model);
                     db.SaveChanges();
                 }

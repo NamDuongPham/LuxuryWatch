@@ -7,7 +7,8 @@ using System.Web.Mvc;
 
 namespace LuxyryWatch.Areas.Admin.Controllers
 {
-    public class AdminHomeController : Controller
+    [Authorize(Roles = "Admin")]
+    public class AdminHomeController : AdminBaseController
     {
         LuxuryWatch_DB db = new LuxuryWatch_DB();
         // GET: Admin/AdminHome
@@ -24,6 +25,11 @@ namespace LuxyryWatch.Areas.Admin.Controllers
             ViewBag.DonDatHang = db.DonDatHangs.Count();
             ViewBag.Online = HttpContext.Application["Online"];
             return View();
+        }
+
+        public ActionResult UserLoginPartial()
+        {
+            return PartialView();
         }
     }
 }

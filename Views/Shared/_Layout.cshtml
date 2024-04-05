@@ -4,18 +4,18 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
-@*@using CaptchaMvc.HtmlHelpers
-    @using CaptchaMvc*@
-@*@using WebBanDongHo.Models.Entities*@
+@using CaptchaMvc.HtmlHelpers
+    @using CaptchaMvc
+@using LuxyryWatch.Models
 @{
-    //WebBanDongHoDbContext db = new WebBanDongHoDbContext();
-    //IEnumerable<LoaiSanPham> LLSP = db.LoaiSanPhams.ToList();
-    //IEnumerable<ThongTin> LTT = db.ThongTins.ToList();
-    //ThongTin TT = null;
-    //if (LTT.Count() > 0)
-    //{
-    //    TT = LTT.First();
-    //}
+    LuxuryWatch_DB db = new LuxuryWatch_DB();
+    IEnumerable<LoaiSanPham> LLSP = db.LoaiSanPhams.ToList();
+    IEnumerable<ThongTin> LTT = db.ThongTins.ToList();
+    ThongTin TT = null;
+    if (LTT.Count() > 0)
+    {
+        TT = LTT.First();
+    }
 }
 <!DOCTYPE html>
 <html lang="zxx">
@@ -377,17 +377,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="col-md-3 col-sm-6 footer-grids">
                         <h3 class="text-white font-weight-bold mb-3">Phân Loại</h3>
                         <ul>
-                            @*@if (LLSP.Count() > 0)
+                            @if (LLSP.Count() > 0)
+                            {
+                                foreach (var item in LLSP)
                                 {
-                                    foreach (var item in LLSP)
-                                    {*@
-                            <li class="mb-3">
-                                <a href="@Url.Action("HienThiDanhSachSanPham", "SanPham")"></a>
-                            </li>
-                            @*}
-                                }*@
-                            <li>Nam</li>
-                            <li>Nữ</li>
+                                    <li class="mb-3">
+                                        <a href="@Url.Action("HienThiDanhSachSanPham", "SanPham", new{ @MaLoaiSP = item.MaLoaiSP})">@item.TenLoaiSP</a>
+                                    </li>
+                                }
+                            }
                         </ul>
                     </div>
                     <!-- //footer categories -->
@@ -406,20 +404,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="col-md-3 col-sm-6 footer-grids mt-md-0 mt-4">
                         <h3 class="text-white font-weight-bold mb-3">Liên Hệ</h3>
                         <ul>
-                            @*@if (TT != null)
-                                {*@
+                            @if (TT != null)
+                            {
                             <li class="mb-3">
-                                <i class="fas fa-map-marker"></i>Hutech khu E
+                                <i class="fas fa-map-marker"></i>@TT.DiaChi
                             </li>
                             <li class="mb-3">
-                                <i class="fas fa-phone"></i>09122312
+                                <i class="fas fa-phone"></i>@TT.SDT
                             </li>
                             <li class="mb-3">
                                 <i class="fas fa-envelope-open"></i>
-                                <a href="#"> trinhgianhsoi@gmail.com</a>
+                                <a href="@Url.Action("mailto:"+TT.Email)"> @TT.Email</a>
                             </li>
-                            @*  *@
 
+                            }
                         </ul>
                     </div>
                     <div class="col-md-3 col-sm-6 footer-grids w3l-agileits mt-md-0 mt-4">

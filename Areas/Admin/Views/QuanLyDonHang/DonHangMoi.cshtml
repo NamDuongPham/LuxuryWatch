@@ -1,0 +1,149 @@
+﻿@using PagedList.Mvc
+@using LuxyryWatch.Models
+@model PagedList.IPagedList<DonDatHang>
+@{
+    ViewBag.Title = "DonHangMoi";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Quản lý đơn hàng mới</h6>
+    </div>
+    <div class="col-md-4">
+        <br />
+        @using (Html.BeginForm("DonHangMoi", "QuanLyDonHang"))
+        {
+            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="@ViewBag.search" name="search">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        }
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã đơn đặt hàng</th>
+                        <th>Khách hàng</th>
+                        <th>Ngày đặt</th>
+                        <th>Địa chỉ nhận hàng</th>
+                        <td>Ghi chú</td>
+                        <th>Tổng thanh toán</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row_@item.MaDDH">
+                            <td>@item.MaDDH</td>
+                            <td>@item.MAKH</td>
+                            <td>@item.NgayDat.Value.ToString("dd/MM/yyyy")</td>
+                            <td>@item.DiaChiNhanHang</td>
+                            <td>@item.GhiChu</td>
+                            <td>@item.TongThanhToan.Value.ToString("#,##")</td>
+                            <td>
+                                <a href="@Url.Action("DuyetDonHang", "QuanLyDonHang", new { @MaDDH = item.MaDDH })">Duyệt đơn hàng</a>
+                                |
+                                <a href="#" data-id="@item.MaDDH" class="btn-update">Cập nhật thông tin</a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <div>
+            @Html.PagedListPager(Model, Page => Url.Action("DonHangMoi", new
+       {
+           page = Page,
+           @search = @ViewBag.search
+       }), new PagedListRenderOptions
+       {
+           LiElementClasses = new string[] { "item" },
+
+       })
+        </div>
+    </div>
+
+</div>
+<!-- Modal -->
+<div class="modal fade" id="donhang" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            @using (Ajax.BeginForm("CapNhatThongTin", "QuanLyDonHang", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "ThongBao" }))
+            {
+                <form class="user">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close close1" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Địa chỉ nhân hàng</label>
+                            <input type="text" name="diachi" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp">
+                        </div>
+                        <div class="form-group">
+                            <label>Ghi chú</label>
+                            <input type="text" name="ghichu" class="form-control form-control-user" id="exampleInputPassword">
+                        </div>
+                        <input type="hidden" id="donhangid" value="0" name="MaDDH" />
+                        <h4 style="color:red;" , id="ThongBao"></h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary close1" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="sub">Save changes</button>
+                    </div>
+                </form>
+            }
+        </div>
+    </div>
+</div>
+<style>
+    .item {
+        height: 30px;
+        width: 30px;
+        padding-top: 2px;
+        border: 0.5px solid pink;
+        text-align: center;
+        border-radius: 3px;
+    }
+
+        .item a {
+            color: black;
+            text-decoration: none;
+        }
+
+    .pagination .active {
+        background-color: #337AB7;
+        color: white;
+    }
+
+    .item:hover {
+        background-color: #EEEEEE;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('.btn-update').off('click').on('click', function (e) {
+            $('#donhang').modal('show');
+            $('#donhangid').val($(this).data('id'));
+        })
+    })
+    //$('.close1').click(function () {
+    //    location.reload();
+    //})
+</script>
+
+

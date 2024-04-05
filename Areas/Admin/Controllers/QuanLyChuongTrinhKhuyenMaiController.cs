@@ -8,7 +8,8 @@ using System.Web.Mvc;
 
 namespace LuxyryWatch.Areas.Admin.Controllers
 {
-    public class QuanLyChuongTrinhKhuyenMaiController : Controller
+    [Authorize(Roles = "Admin")]
+    public class QuanLyChuongTrinhKhuyenMaiController : AdminBaseController
     {
         // GET: Admin/QuanLyChuongTrinhKhuyenMai
 

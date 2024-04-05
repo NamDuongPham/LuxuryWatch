@@ -135,7 +135,7 @@
                 <div id="collapsePages2" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="@Url.Action("DonHangMoi", "QuanLyDonHang")">Đơn hàng mới</a>
-                        <a class="collapse-item" href="@Url.Action("DonHangDangXuLy", "QuanLyDonHang")">Đơn hàng đang xử lý</a>
+                        <a class="collapse-item" href="@Url.Action("DonDangXuLy", "QuanLyDonHang")">Đơn hàng đang xử lý</a>
                         <a class="collapse-item" href="@Url.Action("DonHangDaHoanThanh", "QuanLyDonHang")">Đơn hàng đã hoàn thành</a>
                         <a class="collapse-item" href="@Url.Action("DonHangDaHuy", "QuanLyDonHang")">Đơn hàng đã hủy</a>
                     </div>
@@ -229,7 +229,7 @@
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
-                        @*@Html.Action("UserLoginPartial", "AdminHome")*@
+                        @Html.Action("UserLoginPartial", "AdminHome")
 
                     </ul>
 

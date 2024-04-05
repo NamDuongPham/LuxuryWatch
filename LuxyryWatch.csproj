@@ -143,16 +143,26 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminBaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminHomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminLoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuanLyChuongTrinhKhuyenMaiController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QuanLyDonHangController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuanLyKhachHangController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QuanLyLoaiSanPhamController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuanLyLoaiThanhVienController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuanLyNhaCungCapController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QuanLyNhapHangController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuanLyNhaSanXuatController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QuanLyPhanQuyenController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QuanLyQuyenController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuanLySanPhamController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuanLySanPhamKhuyenMaiController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QuanLySliderController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuanLyThanhVienController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QuanLyThongKeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QuanLyThongTinController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QuanLyThongTinTaiKhoanController.cs" />
     <Compile Include="Controllers\GioHangController.cs" />
     <Compile Include="Controllers\GioiThieuController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -3333,6 +3343,30 @@
     <Content Include="Areas\Admin\Views\QuanLyThanhVien\ThemThanhVien.cshtml" />
     <Content Include="Areas\Admin\Views\QuanLyThanhVien\XoaThanhVien.cshtml" />
     <Content Include="Areas\Admin\Views\QuanLyChuongTrinhKhuyenMai\SuaChuongTrinhKhuyenMai.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLySlider\DanhSachSlider.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLySlider\CapNhatSlider.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyDonHang\DonHangMoi.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyDonHang\DonDangXuLy.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyDonHang\DonHangDaHoanThanh.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyDonHang\DonHangDaHuy.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyDonHang\DuyetDonHang.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyThongTin\ThongTinChung.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyThongTin\GioiThieu.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyLoaiSanPham\DanhSachLoaiSanPham.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyLoaiSanPham\ThemLoaiSanPham.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyLoaiSanPham\SuaLoaiSanPham.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyNhapHang\NhapHang.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyNhapHang\DanhSachPhieuNhap.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyNhapHang\ChiTietPhieuNhap.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyThongKe\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminHome\UserLoginPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyThongTinTaiKhoan\ThongTinTaiKhoan.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\Loi_404.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyQuyen\DanhSachQuyen.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyQuyen\ThemQuyen.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyQuyen\SuaQuyen.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyPhanQuyen\DanhSachPhanQuyen.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyPhanQuyen\PhanQuyen.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3377,6 +3411,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\AdminBase\" />
     <Folder Include="Views\TaiKhoan\" />
   </ItemGroup>
   <ItemGroup>

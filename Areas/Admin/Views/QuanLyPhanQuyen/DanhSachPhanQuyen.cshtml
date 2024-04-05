@@ -1,0 +1,94 @@
+﻿@using PagedList.Mvc
+@using LuxyryWatch.Models
+@model PagedList.IPagedList<LoaiThanhVien>
+@{
+    ViewBag.Title = "DanhSachPhanQuyen";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Quản lý phân quyền</h6>
+    </div>
+    <div class="col-md-4">
+        <br />
+        @using (Html.BeginForm("DanhSachPhanQuyen", "QuanLyPhanQuyen"))
+        {
+            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="@ViewBag.search" name="search">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        }
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã loại thành viên</th>
+                        <th>Tên loại thành viên</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row_@item.MaLoaiTV">
+                            <td>@item.MaLoaiTV</td>
+                            <td>@item.TenLoaiTV</td>
+                            <td>
+                                <a href="@Url.Action("PhanQuyen", "QuanLyPhanQuyen", new { @MaLoaiTV = item.MaLoaiTV})">Phân quyền</a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <div>
+            @Html.PagedListPager(Model, Page => Url.Action("DanhSachPhanQuyen", new
+       {
+           page = Page,
+           @search = @ViewBag.search
+       }), new PagedListRenderOptions
+       {
+           LiElementClasses = new string[] { "item" },
+
+       })
+        </div>
+    </div>
+
+</div>
+<style>
+    .item {
+        height: 30px;
+        width: 30px;
+        padding-top: 2px;
+        border: 0.5px solid pink;
+        text-align: center;
+        border-radius: 3px;
+    }
+
+        .item a {
+            color: black;
+            text-decoration: none;
+        }
+
+    .pagination .active {
+        background-color: #337AB7;
+        color: white;
+    }
+
+    .item:hover {
+        background-color: #EEEEEE;
+    }
+</style>
+
+

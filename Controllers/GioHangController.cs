@@ -143,6 +143,7 @@ namespace LuxyryWatch.Controllers
             {
                 ThanhVien tv = Session["TaiKhoan"] as ThanhVien;
                 ltv = db.LoaiThanhViens.SingleOrDefault(x => x.MaLoaiTV == tv.MaLoaiTV);
+                temp = tv.Email;
                 //Kiểm tra khách hàng đã tồn tại trong csdl hay chưa
                 KhachHang checkKH = db.KhachHangs.SingleOrDefault(x => x.MaTV == tv.MaTV);
                 KH = checkKH;
@@ -167,6 +168,7 @@ namespace LuxyryWatch.Controllers
             else
             {
                 uudai = (double)ltv.uuDai;
+                
             }
 
             //Tạo mới đơn hàng
@@ -260,7 +262,6 @@ namespace LuxyryWatch.Controllers
             {
                 Console.WriteLine(ex.Message);
             }
-
         }
     }
 }

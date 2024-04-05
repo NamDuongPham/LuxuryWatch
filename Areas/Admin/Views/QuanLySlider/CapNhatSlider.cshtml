@@ -1,0 +1,90 @@
+﻿@using LuxyryWatch.Models
+@model IEnumerable<Slider>
+@{
+    ViewBag.Title = "CapNhatSlider";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+<script src="~/Areas/Admin/Content/ckeditor/ckeditor.js"></script>
+<script src="~/Areas/Admin/Content/ckfinder/ckfinder.js"></script>
+<script>
+    $(document).ready(function () {
+
+        var sanpham = {
+            init: function () {
+                sanpham.registerEvents();
+            },
+            registerEvents: function () {
+                $('#btnChooImages').off('click').on('click', function (e) {
+                    e.preventDefault();
+                    var finder = new CKFinder();
+                    finder.selectActionFunction = function (url) {
+                        $('#imageList').append('<div style="float:left;min-height:100%;" class="p-1"><img src="' + url + '" width="100" heigtht="100" /><a href="#" class="btn-delImage"><i class="fa fa-times"></i></a></div>');
+                        $('.btn-delImage').off('click').on('click', function (e) {
+                            e.preventDefault();
+                            $(this).parent().remove();
+                        });
+                    };
+                    finder.popup();
+                });
+                $('.btn-delImage-cu').off('click').on('click', function (e) {
+                    e.preventDefault();
+                    $(this).parent().remove();
+                });
+                $('#save').click(function () {
+                    var img = [];
+                    $.each($('#imageList img'), function (i, item) {
+                        img.push($(item).prop('src'));
+                    })
+                    $('#listAnh').val(img);
+                })
+            }
+        }
+        sanpham.init();
+
+    });
+
+</script>
+<div class="card shadow mb-4">
+    <div style="padding: 10px;">
+        <h2>Cập nhật slider</h2>
+        <h3 style="color:red;">@ViewBag.ThongBao</h3>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                <div class="form-group p-1 modal-body">
+                    @Html.Label("Hình ảnh sản phẩm", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div id="imageList" style="min-height:100%; margin: 5px; overflow:auto;">
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <div style="float:left;min-height:100%;" class="p-1">
+                                        <img src="@Url.Content("~"+item.Anh)" width="100" heigtht="100" />
+                                        <a href="#" class="btn-delImage-cu">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <div class="clear"></div>
+                        <input type="button" id="btnChooImages" class="btn btn-primary" value="Chọn ảnh" />
+
+                    </div>
+                </div>
+                <input id="listAnh" type="text" style="display: none" name="listAnh" />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-success" id="save" />
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+

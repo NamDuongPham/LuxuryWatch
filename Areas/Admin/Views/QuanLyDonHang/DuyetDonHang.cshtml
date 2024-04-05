@@ -1,0 +1,162 @@
+﻿@using LuxyryWatch.Models
+@model DonDatHang
+@{
+    ViewBag.Title = "DuyetDonHang";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="card shadow mb-4">
+    <div style="padding: 10px;">
+        <h2>Thông tin đơn hàng <font color="#f65e84">@Model.KhachHang.TenKH</font></h2>
+        @using (Html.BeginForm())
+        {
+            <div class="ChiTietDonHang table">
+                @{ IEnumerable<ChiTietDonDatHang> listChiTietDH = (IEnumerable<ChiTietDonDatHang>)ViewBag.ListChiTietDH;}
+                <table class="table" id="table1">
+                    @*Phần thông tin đơn hàng*@
+                    <tr>
+                        <td colspan="4">
+                            <table style="width:100%;">
+                                <tr>
+                                    <td>Mã đơn hàng: <br /> <b style="color:red;">@Model.MaDDH @Html.Hidden("MaDDH", @Model.MaDDH)</b></td>
+                                    <td>Tên khách hàng:<br /> <b style="color:red;">@Model.KhachHang.TenKH</b></td>
+                                    <td>Ngày đặt:<br />@Model.NgayDat.Value.ToString("dd/MM/yyyy")</td>
+                                    <td>
+
+                                        Ngày giao:<br />@{ string x = null; if (Model.NgayGiao != null) { x = Model.NgayGiao.Value.ToString("yyyy-MM-dd"); }
+
+                                        }<input type="date" name="NgayGiao"
+                                                value="@x">
+                                    </td>
+                                    <td>Đã thanh toán:<br /> @Html.EditorFor(model => model.DaThanhToan)</td>
+                                    <td>Giao hàng:<br /> @Html.EditorFor(model => model.TinhTrangGiaoHang)</td>
+                                    <td>Hủy:<br /> @Html.EditorFor(model => model.DaHuy)</td>
+                                    <td>Hoàn thành:<br /> @Html.EditorFor(model => model.HoanThanh)</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    @*Thông tin chi tiết đơn hàng*@
+                    <tr>
+                        <td><b>Mã sản phẩm</b></td>
+                        <td><b>Sản phẩm</b></td>
+                        <td><b>Số lượng đặt</b></td>
+                        <td><b>Đơn giá đặt</b></td>
+                        <td><b>Thành tiền</b></td>
+                    </tr>
+                    @foreach (var item in listChiTietDH)
+                    {
+                        <tr>
+                            <td>@item.SanPham.MaSP</td>
+                            <td>@item.SanPham.TenSP</td>
+                            <td>@item.SoLuong</td>
+                            @{ decimal thanhtien = (decimal)(@item.DonGia * @item.SoLuong);}
+                            <td>@item.DonGia.Value.ToString("#,##")</td>
+                            <td>@thanhtien.ToString("#,##")</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td align="right" colspan="4">Tổng số lượng: @Model.ChiTietDonDatHangs.Sum(n => n.SoLuong) sản phẩm</td>
+                    </tr>
+                    @if (Model.UuDai > 0)
+                    {
+                        <tr>
+                            <td align="right" colspan="4">Tổng tiền:@Model.ChiTietDonDatHangs.Sum(n => n.ThanhTien).Value.ToString("#,##") đồng</td>
+                        </tr>
+                        <tr>
+                            <td align="right" colspan="4">Ưu đãi:@Model.UuDai %</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td align="right" colspan="4">Tổng tiền:@Model.TongThanhToan.Value.ToString("#,##") đồng</td>
+                    </tr>
+                </table>
+
+                <div id="table2" style="display:none;">
+                    <div class="table-responsive">
+                        <table class="table table-striped" style="background-color:burlywood;">
+
+                            @*<tr>
+                                    <td colspan="4">
+                                        <table style="width:100%;">
+                                            <tr>
+                                                <td>Mã đơn hàng: <b style="color:red;">@Model.maDDH @Html.Hidden("maDDH", @Model.maDDH)</b></td>
+
+                                                <td>Tên khách hàng: <b style="color:red;">@Model.khachHang.tenKH</b></td>
+                                                <td>Ngày đặt:@Model.ngayDat.Value.ToString("dd/MM/yyyy")</td>
+                                                <td>
+                                                    Ngày giao: @Html.TextBox("ngayGiao", Model.ngayGiao, new { @id = "datepicker" })
+                                                    @Html.ValidationMessageFor(model => model.ngayGiao, "", new { @class = "text-danger" })
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>*@
+
+                            <tr>
+                                <td><b>Mã sản phẩm</b></td>
+                                <td><b>Sản phẩm</b></td>
+                                <td><b>Số lượng đặt</b></td>
+                                <td><b>Đơn giá đặt</b></td>
+                                <td><b>Thành tiền</b></td>
+                            </tr>
+                            @foreach (var item in listChiTietDH)
+                            {
+                                <tr>
+                                    <td>@item.SanPham.MaLoaiSP</td>
+                                    <td>@item.SanPham.TenSP</td>
+                                    <td>@item.SoLuong</td>
+                                    @{ decimal thanhtien = (decimal)(@item.DonGia * @item.SoLuong);}
+                                    <td>@item.DonGia.Value.ToString("#,##")</td>
+                                    <td>@thanhtien.ToString("#,##")</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td align="right" colspan="4"><strong>Tổng số lượng:</strong> @Model.ChiTietDonDatHangs.Sum(n => n.SoLuong) sản phẩm</td>
+                            </tr>
+                            @if (Model.UuDai > 0)
+                            {
+                                <tr>
+                                    <td align="right" colspan="4"><strong>Thành tiền:</strong>@Model.ChiTietDonDatHangs.Sum(n => n.ThanhTien).Value.ToString("#,##") đồng</td>
+                                </tr>
+                                <tr>
+                                    <td align="right" colspan="4"><strong>Ưu đãi:</strong>@Model.UuDai %</td>
+                                </tr>
+                            }
+
+                            <tr>
+                                <td align="right" colspan="4"><strong>Tổng tiền:</strong>@Model.TongThanhToan.Value.ToString("#,##") đồng</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <form action="/QuanLyDonHang/DuyetDonHang" method="get">
+                    <input type="button" value="In đơn hàng" id="btnInDonHang" class="btn btn-send" />
+                    <input type="text" value="@ViewBag.email" name="email" id="hd" style="display:none;" />
+                    <input type="submit" value="Lưu đơn hàng" id="btnDuyetDonHang" class="btn btn-success" />
+                </form>
+            </div>
+        }
+    </div>
+</div>
+<script>
+    $("#btnInDonHang").click(function () {
+        var content = "<table>" + $("#table1").html() + "</table>";
+        InDonHang(content);
+    });
+    $("#btnDuyetDonHang").click(function () {
+        var content = $("#table2").html();
+        $("#hd").val(content);
+    });
+    //Phương thức in
+    function InDonHang(content) {
+        var printWindow = window.open('', '', 'height=400,width=800');
+        printWindow.document.write('<html><head><title></title>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write(content);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+    }
+
+</script>

@@ -1,0 +1,76 @@
+﻿@using LuxyryWatch.Models;
+@model LoaiThanhVien
+@{
+    ViewBag.Title = "PhanQuyen";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+    IEnumerable<LoaiThanhVien_Quyen> listLoaiTVQuyen = (IEnumerable<LoaiThanhVien_Quyen>)ViewBag.listLoaiTVQuyen;
+    IEnumerable<Quyen> listQuyen = (IEnumerable<Quyen>)@ViewBag.listQuyen;
+}
+
+<div class="card shadow mb-4">
+    <div style="padding: 10px;">
+        <h2>Phân quyền</h2>
+        <h2 style="color:red;">Loại thành viên: <font color="orange">@Model.TenLoaiTV</font></h2>
+        <hr />
+        @using (Html.BeginForm())
+        {
+            if (listLoaiTVQuyen != null)
+            {
+                //Đối với trường hợp loại thành viên đã phân quyền
+                for (int j = 0; j < listQuyen.Count(); j++)
+                {
+                    int k = 0; //Tạo biến k làm biến đếm duyệt vòng lặp của bảng quyền xem nếu loại thành viên nào có mã quyền (loaiTVQuyen) ứng với quyền (maQuyen)
+                    for (int i = 0; i < listLoaiTVQuyen.Count(); i++)
+                    {
+                        // So sánh item trong bảng quyền và item trong bảng loại thành viên quyền dựa trên thuộc tính mã quyền
+                        if (listQuyen.ElementAt(j).MaQuyen == listLoaiTVQuyen.ElementAt(i).MaQuyen)
+                        {
+                            k++;
+                            break;
+                        }
+                    }
+                    if (k != 0)
+                    {
+                        <div class="col-md-4" style="font-size:15pt;">
+                            <input class="ckb_click" checked="checked" type="checkbox" style="width:20px;height:20px;" name="@Url.Content("["+j+"].MaQuyen")" value="@listQuyen.ElementAt(j).MaQuyen" />
+                            <span>@listQuyen.ElementAt(j).TenQuyen</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-4" style="font-size:15pt;">
+                            <input class="ckb_click" type="checkbox" style="width:20px;height:20px;" name="@Url.Content("["+j+"].MaQuyen")" value="@listQuyen.ElementAt(j).MaQuyen" />
+                            <span>@listQuyen.ElementAt(j).TenQuyen</span>
+                        </div>
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < listQuyen.Count(); i++)
+                {
+                    //Lấy danh sach quyền
+                    <div class="col-md-4" style="font-size:15pt;">
+                        <input class="ckb_click" type="checkbox" style="width:20px;height:20px;" name="@Url.Content("["+i+"].MaQuyen")" value="@listQuyen.ElementAt(i).MaQuyen" />
+                        <span>@listQuyen.ElementAt(i).TenQuyen</span>
+                    </div>
+                }
+            }
+            <div class="clearfix"></div>
+            <br />
+            <input type="submit" value="Duyệt" class="btn btn-success" />
+        }
+    </div>
+</div>
+
+<script>
+    $(".ckb_click").click(function () {
+        i = 0;
+        $(".ckb_click").each(function () {
+            if ($(this).is(":checked")) {
+                $(this).attr("name", "[" + i + "].MaQuyen");
+                i++;
+            }
+        })
+    })
+</script>

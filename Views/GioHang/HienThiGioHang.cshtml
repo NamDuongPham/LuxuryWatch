@@ -1,4 +1,4 @@
-﻿﻿@using LuxyryWatch.Models
+﻿@using LuxyryWatch.Models
 @model List<LuxyryWatch.Models.ItemGioHang>
 @{
     ViewBag.Title = "HienThiGioHang";
@@ -34,7 +34,6 @@ else
                                 <th>Sản phẩm</th>
                                 <th>Số lượng</th>
                                 <th>Tên sản phẩm</th>
-
                                 <th>Giá</th>
                                 <th>Xóa</th>
                             </tr>
@@ -43,7 +42,7 @@ else
                             @foreach (var item in Model)
                             {
                                 x++;
-                                <tr class="@Url.Content("rem"+x)">
+                                <tr class="@Url.Content("rem" + x)">
                                     <td class="invert-image">
                                         @if (item.HinhAnh != null)
                                         {
@@ -58,87 +57,200 @@ else
                                             </a>
                                         }
                                     </td>
-                                    <td class="invert">
-                                        <div class="quantity">
-                                            <div class="quantity-select">
-                                                <div class="entry value">
-                                                    <span>@item.SoLuong</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <td>
+                                        <button class="btn btn-sm btn-secondary decrease-quantity" data-id="@item.MaSP">-</button>
+                                        <input type="number" class="quantity-input" value="@item.SoLuong" min="1" max="100" />
+                                        <button class="btn btn-sm btn-secondary increase-quantity" data-id="@item.MaSP">+</button>
                                     </td>
                                     <td class="invert">@item.TenSP</td>
-                                    <td class="invert">@item.ThanhTien.Value.ToString("#,##")</td>
+                                    <td class="price-per-item">@item.ThanhTien.Value.ToString("#,##")</td>
                                     <td class="invert">
                                         <div class="rem">
-                                            <a href="@Url.Action("XoaItemGioHang", "GioHang", new { @MaSP = item.MaSP})">
+                                            <a href="@Url.Action("XoaItemGioHang", "GioHang", new { @MaSP = item.MaSP })">
                                                 <div class="close1"> </div>
                                             </a>
                                         </div>
                                     </td>
                                 </tr>
                             }
-
                         </tbody>
                     </table>
                 </div>
                 <div style="width: 100%; text-align: left;">
                     <br />
-                    <h3>Tổng đơn hàng: @Model.Sum(y => y.ThanhTien).Value.ToString("#,##")</h3>
+                    <h3>Tổng đơn hàng: <span id="total-order">@Model.Sum(y => y.ThanhTien).Value.ToString("#,##")</span></h3>
                     @if (ViewBag.uuDai > 0)
                     {
                         decimal UuDai = (decimal)ViewBag.uuDai;
                         decimal TongTien = (decimal)Model.Sum(z => z.ThanhTien);
                         decimal TongThanhToan = (decimal)TongTien * ((100 - UuDai) / 100);
                         <h3>Ưu đãi: @ViewBag.uuDai%</h3>
-                        <h3>Tổng thanh toán: @TongThanhToan.ToString("#,##")</h3>
+                        <h3>Tổng thanh toán: <span id="total-payment">@TongThanhToan.ToString("#,##")</span></h3>
                     }
-
                 </div>
             </div>
-            <div class="checkout-left">
-                <div class="address_form_agile mt-sm-5 mt-4">
-                    <h4 class="mb-sm-4 mb-3">Add a new Details</h4>
-                    @using (Html.BeginForm("DatHang", "GioHang"))
-                    {
-                        <form action="payment.html" method="post" class="creditly-card-form agileinfo_form">
-                            <div class="creditly-wrapper wthree, w3_agileits_wrapper">
-                                <div class="information-wrapper">
-                                    <div class="first-row">
-                                        <div class="controls form-group">
-                                            <input class="billing-address-name form-control" type="text" name="HoTen" placeholder="Họ Tên" required="" value="@ViewBag.Hoten">
-                                        </div>
-                                        <div class="w3_agileits_card_number_grids">
-                                            <div class="w3_agileits_card_number_grid_left form-group">
-                                                <div class="controls">
-                                                    <input type="text" class="form-control" placeholder="Số điện thoại" name="SDT" required="" value="@ViewBag.SDT">
+            @if (!(bool)ViewBag.IsLoggedIn)// kiem tra xem khach hang co dang nhap chua
+            {
+                <div class="checkout-left">
+                    <div class="address_form_agile mt-sm-5 mt-4">
+                        <h4 class="mb-sm-4 mb-3">Điền thông tin </h4>
+                        @using (Html.BeginForm("DatHang", "GioHang"))
+                        {
+                            <form action="payment.html" method="post" class="creditly-card-form agileinfo_form">
+                                <div class="creditly-wrapper wthree, w3_agileits_wrapper">
+                                    <div class="information-wrapper">
+                                        <div class="first-row">
+                                            <div class="controls form-group">
+                                                <input class="billing-address-name form-control" type="text" name="HoTen" placeholder="Họ Tên" required="" value="@ViewBag.Hoten">
+                                            </div>
+                                            <div class="w3_agileits_card_number_grids">
+                                                <div class="w3_agileits_card_number_grid_left form-group">
+                                                    <div class="controls">
+                                                        <input type="text" class="form-control" placeholder="Số điện thoại" name="SDT" required="" value="@ViewBag.SDT">
+                                                    </div>
+                                                </div>
+                                                <div class="w3_agileits_card_number_grid_left form-group">
+                                                    <div class="controls">
+                                                        <input type="text" class="form-control" placeholder="Email" name="Email" required="" value="@ViewBag.Email">
+                                                    </div>
+                                                </div>
+                                                <div class="w3_agileits_card_number_grid_right form-group">
+                                                    <div class="controls">
+                                                        <input type="text" class="form-control" placeholder="Địa chỉ nhận hàng" name="DiaChi" required="">
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="w3_agileits_card_number_grid_left form-group">
-                                                <div class="controls">
-                                                    <input type="text" class="form-control" placeholder="Email" name="Email" required="" value="@ViewBag.Email">
-                                                </div>
-                                            </div>
-                                            <div class="w3_agileits_card_number_grid_right form-group">
-                                                <div class="controls">
-                                                    <input type="text" class="form-control" placeholder="Địa chỉ nhận hàng" name="DiaChi" required="">
-                                                </div>
+                                            <div class="controls form-group">
+                                                <input type="text" class="form-control" placeholder="Ghi chú" name="GhiChu" required="">
                                             </div>
                                         </div>
-                                        <div class="controls form-group">
-                                            <input type="text" class="form-control" placeholder="Ghi chú" name="GhiChu" required="">
-                                        </div>
+                                        <button type="submit" class="submit check_out btn">Đặt hàng</button>
                                     </div>
-                                    <button type="submit" class="submit check_out btn">Đặt hàng</button>
                                 </div>
-                            </div>
-                        </form>
-                    }
-
+                            </form>
+                        }
+                    </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                 <button id="btnDatHang" class="submit check_out btn">Đặt hàng</button>
+            }
         </div>
     </div>
-
 }
+    </div>
 
+<script>
+        // Hàm tính toán tổng thành tiền của giỏ hàng
+        function calculateTotal() {
+            var total = 0;
+            $(".total-price").each(function () {
+                var price = parseFloat($(this).text().replace(',', '').replace('$', ''));
+                total += price;
+            });
+            $("#total-order").text(total.toLocaleString('en-US', { style: 'currency', currency: 'USD' }));
+        }
+
+        $(document).ready(function () {
+            $(".increase-quantity").click(function () {
+                var itemId = $(this).data('id');
+                var quantityInput = $(this).siblings('.quantity-input');
+                var currentQuantity = parseInt(quantityInput.val());
+                quantityInput.val(currentQuantity + 1);
+                updateQuantity(itemId, currentQuantity + 1);
+                window.location.reload(); // Reload trang sau khi tăng số lượng
+            });
+
+            $(".decrease-quantity").click(function () {
+                var itemId = $(this).data('id');
+                var quantityInput = $(this).siblings('.quantity-input');
+                var currentQuantity = parseInt(quantityInput.val());
+                if (currentQuantity > 1) {
+                    quantityInput.val(currentQuantity - 1);
+                    updateQuantity(itemId, currentQuantity - 1);
+                    window.location.reload(); // Reload trang sau khi tăng số lượng
+                }
+            });
+
+            function updateQuantity(itemId, newQuantity) {
+                // Gửi yêu cầu cập nhật số lượng lên máy chủ
+                $.ajax({
+                    type: "POST",
+                    url: "/GioHang/CapNhatSoLuong",
+                    data: { MaSP: itemId, SoLuong: newQuantity },
+                    success: function (response) {
+                        if (response.success) {
+                            updatePrice(itemId, newQuantity);
+                            calculateTotal(); // Cập nhật tổng thành tiền sau khi cập nhật số lượng
+                        } else {
+                            console.log("Cập nhật số lượng thất bại");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Lỗi: " + error);
+                    }
+                });
+            }
+
+            function updatePrice(itemId, newQuantity) {
+                var itemRow = $(".rem" + itemId);
+                var pricePerItem = parseFloat(itemRow.find(".price-per-item").text().replace(',', '').replace('$', ''));
+                var newPrice = pricePerItem * newQuantity;
+                itemRow.find(".total-price").text(newPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' }));
+            }
+        });
+
+        $(document).ready(function () {
+            // Lấy thông tin từ các trường input và gán vào ViewBag
+            var HoTen = $("#HoTen").val();
+            var SDT = $("#SDT").val();
+            var Email = $("#Email").val();
+            var DiaChi = $("#DiaChi").val();
+            var GhiChu = $("#GhiChu").val();
+
+            // Gán giá trị cho các biến ViewBag
+            ViewBag.Hoten = HoTen;
+            ViewBag.Email = Email;
+            ViewBag.SDT = SDT;
+
+            // Nếu chưa đăng nhập, điền thông tin từ ViewBag vào các trường input
+            if (!@ViewBag.IsLoggedIn) {
+                $("#HoTen").val(ViewBag.Hoten);
+                $("#Email").val(ViewBag.Email);
+                $("#SDT").val(ViewBag.SDT);
+            }
+        });
+
+        // Xử lý sự kiện submit form
+        $("#formKhachHang").submit(function (event) {
+            event.preventDefault(); // Ngăn chặn submit mặc định của form
+
+            // Lấy thông tin từ các trường input
+            var HoTen = $("#HoTen").val();
+            var SDT = $("#SDT").val();
+            var Email = $("#Email").val();
+            var DiaChi = $("#DiaChi").val();
+            var GhiChu = $("#GhiChu").val();
+
+            // Gửi thông tin đặt hàng lên server
+            $.post("@Url.Action("DatHang", "GioHang")",
+                {
+                    HoTen: HoTen,
+                    SDT: SDT,
+                    Email: Email,
+                    DiaChi: DiaChi,
+                    GhiChu: GhiChu
+                },
+                function (data) {
+                    // Xử lý kết quả trả về từ server nếu cần
+                    console.log(data);
+                });
+        });
+
+        // Xử lý sự kiện click nút Đặt hàng nếu đã đăng nhập
+        $("#btnDatHang").click(function () {
+            // Gọi action DatHang của controller GioHang để xử lý đặt hàng
+            window.location.href = "@Url.Action("DatHang", "GioHang")";
+        });
+</script>

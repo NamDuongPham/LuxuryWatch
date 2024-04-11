@@ -1,0 +1,58 @@
+﻿@model LuxyryWatch.Models.SanPhamKhuyenMai
+
+@{
+    ViewBag.Title = "XoaSanPhamKhuyenMai";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_layout.cshtml";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Xác nhận xóa sản phẩm khuyến mãi</h6>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Thông tin sản phẩm khuyến mãi:</h4>
+                <p><strong>Mã sản phẩm:</strong> @Model.MaSPKM</p>
+                <p><strong>Tên sản phẩm:</strong> @Model.SanPham.TenSP</p>
+                <p><strong>Giá trị giảm:</strong> @Model.GiaTriGiam%</p>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Bạn có chắc chắn muốn xóa sản phẩm khuyến mãi này?</h4>
+                <form method="post" action="@Url.Action("XoaSanPhamKhuyenMai", "QuanLySanPhamKhuyenMai", new { MaSPKM = Model.MaSPKM, returnUrl = Request.Url.PathAndQuery })">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger">Xác nhận xóa</button>
+                    <a href="@Url.Action("DanhSachKhuyenMai")" class="btn btn-secondary ml-2">Hủy bỏ</a>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+            $(document).ready(function () {
+                $('#confirmDelete').click(function () {
+                    if (confirm("Bạn có chắc chắn muốn xóa sản phẩm khuyến mãi này?")) {
+                        $.ajax({
+                            url: '@Url.Action("XoaSanPhamKhuyenMai", "QuanLySanPhamKhuyenMai", new { MaSPKM = Model.MaSPKM })',
+                            type: 'POST',
+                            data: $('#deleteForm').serialize(),
+                            success: function (response) {
+                                alert('Xóa thành công!');
+                                location.reload();
+                            },
+                            error: function (xhr, status, error) {
+                                alert('Đã xảy ra lỗi khi xóa: ' + xhr.responseText);
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+   
+}

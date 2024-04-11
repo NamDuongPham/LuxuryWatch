@@ -118,7 +118,7 @@
                                             </div>
                                             <div class="item-info-product text-center border-top mt-4">
                                                 <h4 class="pt-1">
-                                                    <a href="@Url.Action("HienThiChiTietSanPham", "SanPham", new { @MaSP = item.MaSP })">@item.TenSP</a>
+                                                    <a href="@Url.Action("HienThiChiTietSanPham", "SanPham", new { @MaSP = item.MaSP })">@(item.TenSP.Length > 30 ? item.TenSP.Substring(0, 10) + "..." : item.TenSP)</a>
                                                 </h4>
                                                 @if (LSPKM == null)
                                                 {

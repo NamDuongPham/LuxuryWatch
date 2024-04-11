@@ -23,25 +23,61 @@ namespace LuxyryWatch.Controllers
             List<ItemGioHang> listGioHang = LayGioHang();
             return PartialView(listGioHang);
         }
+        //public ActionResult HienThiGioHang()
+        //{
+        //    ViewBag.AnhSanPham = db.AnhSanPhams.ToList();
+        //    List<ItemGioHang> listGioHang = LayGioHang();
+        //    bool IsLoggedIn = Session["TaiKhoan"] != null;
+
+        //    // Truyền biến IsLoggedIn vào ViewBag
+        //    ViewBag.IsLoggedIn = IsLoggedIn;
+        //    if (Session["TaiKhoan"] == null)
+        //    {
+        //        ViewBag.uuDai = 0;
+        //    }
+        //    else
+        //    {
+        //        ThanhVien tv = Session["TaiKhoan"] as ThanhVien;
+        //        LoaiThanhVien ltv = db.LoaiThanhViens.SingleOrDefault(x => x.MaLoaiTV == tv.MaLoaiTV);
+        //        ViewBag.Hoten = tv.Hoten;
+        //        ViewBag.Email = tv.Email;
+        //        ViewBag.SDT = tv.SoDienThoai;
+        //        ViewBag.uuDai = ltv.uuDai;
+        //    }
+        //    return View(listGioHang);
+        //}
         public ActionResult HienThiGioHang()
         {
             ViewBag.AnhSanPham = db.AnhSanPhams.ToList();
             List<ItemGioHang> listGioHang = LayGioHang();
-            if (Session["TaiKhoan"] == null)
+            bool IsLoggedIn = Session["TaiKhoan"] != null;
+
+            // Truyền biến IsLoggedIn vào ViewBag
+            ViewBag.IsLoggedIn = IsLoggedIn;
+
+            ThanhVien tv = LayThongTinThanhVien();
+
+            if (tv != null)
             {
-                ViewBag.uuDai = 0;
-            }
-            else
-            {
-                ThanhVien tv = Session["TaiKhoan"] as ThanhVien;
-                LoaiThanhVien ltv = db.LoaiThanhViens.SingleOrDefault(x => x.MaLoaiTV == tv.MaLoaiTV);
                 ViewBag.Hoten = tv.Hoten;
                 ViewBag.Email = tv.Email;
                 ViewBag.SDT = tv.SoDienThoai;
-                ViewBag.uuDai = ltv.uuDai;
+
+                // Lấy thông tin loại thành viên
+                LoaiThanhVien ltv = db.LoaiThanhViens.SingleOrDefault(x => x.MaLoaiTV == tv.MaLoaiTV);
+                if (ltv != null)
+                {
+                    ViewBag.uuDai = ltv.uuDai;
+                }
+                else
+                {
+                    ViewBag.uuDai = 0; // Set a default value if ltv is null
+                }
             }
             return View(listGioHang);
         }
+
+
         public List<ItemGioHang> LayGioHang()
         {
             //Giỏ hàng đã tồn tại
@@ -107,6 +143,7 @@ namespace LuxyryWatch.Controllers
             }
             return listGioHang.Sum(n => n.ThanhTien);
         }
+
         public ActionResult XoaItemGioHang(int MaSP)
         {
             List<ItemGioHang> list = LayGioHang();
@@ -119,6 +156,46 @@ namespace LuxyryWatch.Controllers
             list.Remove(item);
             return RedirectToAction("HienThiGioHang");
         }
+
+        //[HttpPost]
+        //public ActionResult CapNhatSoLuong(int MaSP, int soLuong)
+        //{
+        //    // Tìm sản phẩm trong cơ sở dữ liệu
+        //    List<ItemGioHang> list = LayGioHang();
+        //    ItemGioHang item = list.SingleOrDefault(x => x.MaSP == MaSP);
+        //    if (item != null)
+        //    {
+        //        // Cập nhật số lượng mới của sản phẩm
+        //        item.SoLuong = soLuong;
+        //        // Lưu thay đổi vào cơ sở dữ liệu
+        //        db.SaveChanges();
+        //        // Trả về kết quả thành công
+        //        return Json(new { success = true });
+        //    }
+        //    // Trả về kết quả thất bại nếu không tìm thấy sản phẩm
+        //    return Json(new { success = false });
+        //}
+        public ActionResult CapNhatSoLuong(int MaSP, int SoLuong)
+        {
+            List<ItemGioHang> list = LayGioHang();
+            ItemGioHang item = list.SingleOrDefault(x => x.MaSP == MaSP);
+            if (item != null)
+            {
+                item.SoLuong = SoLuong;
+                item.ThanhTien = item.DonGia * item.SoLuong;
+            }
+            return Json(new { TongSoLuong = TinhTongSoLuong(), TongThanhTien = TinhTongThanhTien() });
+        }
+        private ThanhVien LayThongTinThanhVien()
+        {
+            if (Session["TaiKhoan"] != null)
+            {
+                ThanhVien tv = Session["TaiKhoan"] as ThanhVien;
+                return tv;
+            }
+            return null;
+        }
+
         public ActionResult DatHang(string HoTen, string SDT, string Email, string DiaChi, string GhiChu)
         {
             KhachHang KH = new KhachHang();
@@ -212,7 +289,7 @@ namespace LuxyryWatch.Controllers
                 strSanPham += "<tr>";
                 strSanPham += "<td>" + sp.TenSP + "</td>";
                 strSanPham += "<td>" + sp.SoLuong + "</td>";
-                strSanPham += "<td>" + sp.DonGia + "</td>";
+                strSanPham += "<td>" + sp.DonGia.Value.ToString("#,##") + "</td>";
                 strSanPham += "<tr>";
 
 
@@ -233,7 +310,6 @@ namespace LuxyryWatch.Controllers
             Session["gioHang"] = null;
             return RedirectToAction("HienThiGioHang");
         }
-
 
         public void GuiEmail(string title, string toEmail, string fromEmail, string passWord, string content)
         {
@@ -264,4 +340,5 @@ namespace LuxyryWatch.Controllers
             }
         }
     }
+
 }

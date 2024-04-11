@@ -20,11 +20,21 @@
                             foreach (var item in Model)
                             {
                                 <tr>
+                                        <td>@item.TenSP</td>
+                                        <td><a href="@Url.Action("XoaItemGioHang", "GioHang", new { @MaSP = item.MaSP})"><button type="button" class="btn btn-primary">x</button></a></td>
+                                        <td>@item.ThanhTien.Value.ToString("#,##")</td>
+                                    </tr>
+                                @*<tr>
                                     <td>@item.TenSP</td>
-                                    <td>@item.SoLuong</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-secondary decrease-quantity" data-id="@item.MaSP">-</button>
+                                        <input type="number" class="quantity-input" value="@item.SoLuong" min="1" max="100" />
+                                        <button class="btn btn-sm btn-secondary increase-quantity" data-id="@item.MaSP">+</button>
+                                    </td>
                                     <td><a href="@Url.Action("XoaItemGioHang", "GioHang", new { @MaSP = item.MaSP})"><button type="button" class="btn btn-primary">x</button></a></td>
                                     <td>@item.ThanhTien.Value.ToString("#,##")</td>
-                                </tr>
+                                </tr>*@
+
                             }
                         }
                     </tbody>
@@ -36,7 +46,7 @@
                 <div class="modal-footer">
                     <div>Tổng tiền: @tongtien.ToString("#,##")</div>
                     <a href="@Url.Action("HienThiGioHang", "GioHang")">
-                        <input type="button" class="btn btn-success" value="Check out" />
+                        <input type="button" class="btn btn-success" value="Thêm vào giỏ" />
                     </a>
                 </div>
             }
@@ -55,3 +65,5 @@
         max-width: 700px;
     }
 </style>
+
+

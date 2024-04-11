@@ -147,6 +147,7 @@
     <Compile Include="Areas\Admin\Controllers\AdminHomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminLoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuanLyChuongTrinhKhuyenMaiController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QuanLyDoiTacThanhToanController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuanLyDonHangController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuanLyKhachHangController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuanLyLoaiSanPhamController.cs" />
@@ -3367,6 +3368,12 @@
     <Content Include="Areas\Admin\Views\QuanLyQuyen\SuaQuyen.cshtml" />
     <Content Include="Areas\Admin\Views\QuanLyPhanQuyen\DanhSachPhanQuyen.cshtml" />
     <Content Include="Areas\Admin\Views\QuanLyPhanQuyen\PhanQuyen.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyDoiTacThanhToan\DanhSachDoiTacThanhToan.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyDoiTacThanhToan\ThemDoiTacThanhToan.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyDoiTacThanhToan\SuaDoiTacThanhToan.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLySanPhamKhuyenMai\ThemSanPhamKhuyenMai.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLySanPhamKhuyenMai\SuaSanPhamKhuyenMai.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLySanPhamKhuyenMai\XoaSanPhamKhuyenMai.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

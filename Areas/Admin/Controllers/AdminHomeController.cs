@@ -7,7 +7,8 @@ using System.Web.Mvc;
 
 namespace LuxyryWatch.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, NhanVien")]
+
     public class AdminHomeController : AdminBaseController
     {
         LuxuryWatch_DB db = new LuxuryWatch_DB();

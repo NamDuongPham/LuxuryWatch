@@ -1,0 +1,35 @@
+﻿<Properties StartupConfiguration="{9A9A5CFE-B541-485C-A2FA-D703BDE13C1C}|">
+  <MonoDevelop.Ide.ItemProperties.LuxyryWatch PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/GioHangController.cs">
+    <Files>
+      <File FileName="Areas/Admin/Controllers/AdminBaseController.cs" />
+      <File FileName="Areas/Admin/Controllers/QuanLyPhanQuyenController.cs" />
+      <File FileName="Areas/Admin/Controllers/QuanLyQuyenController.cs" />
+      <File FileName="Controllers/GioHangController.cs" Line="18" Column="27" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="LuxyryWatch">
+            <Node name="LuxyryWatch" expanded="True">
+              <Node name="Areas" expanded="True">
+                <Node name="Admin" expanded="True">
+                  <Node name="Controllers" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="Controllers" expanded="True">
+                <Node name="GioHangController.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+</Properties>

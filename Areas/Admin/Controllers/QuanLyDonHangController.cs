@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace LuxyryWatch.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, NhanVien")]
     public class QuanLyDonHangController : AdminBaseController
     {
         // GET: Admin/QuanLyDonHang
@@ -109,6 +109,8 @@ namespace LuxyryWatch.Areas.Admin.Controllers
         [ValidateInput(false)]
         public ActionResult DuyetDonHang(DonDatHang dDH, string email)
         {
+
+            // Gán danh sách đối tác thanh toán cho ViewBag
             DonDatHang dDHUpdate = db.DonDatHangs.SingleOrDefault(n => n.MaDDH == dDH.MaDDH);
             dDHUpdate.TinhTrangGiaoHang = dDH.TinhTrangGiaoHang;
             dDHUpdate.DaThanhToan = dDH.DaThanhToan;
@@ -116,6 +118,8 @@ namespace LuxyryWatch.Areas.Admin.Controllers
             dDHUpdate.NgayGiao = dDH.NgayGiao;
             dDHUpdate.DaHuy = dDH.DaHuy;
             dDHUpdate.HoanThanh = dDH.HoanThanh;
+            dDHUpdate.MaHTTT = dDH.MaHTTT;
+
             db.SaveChanges();
             DonDatHang ddhkh = db.DonDatHangs.SingleOrDefault(x => x.MaDDH == dDH.MaDDH);
             var listChiTietDH = db.ChiTietDonDatHangs.Where(n => n.MaDDH == dDH.MaDDH).ToList();

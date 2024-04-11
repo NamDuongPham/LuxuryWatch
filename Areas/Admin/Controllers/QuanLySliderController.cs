@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace LuxyryWatch.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, NhanVien")]
     public class QuanLySliderController : AdminBaseController
     {
         // GET: Admin/QuanLySlider

@@ -18,29 +18,27 @@
                         <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                    <h1 class="h4 text-gray-900 mb-4">Quản Trị Viên</h1>
                                 </div>
                                 @using (Html.BeginForm("Index", "AdminLogin"))
                                 {
                                     <form class="user">
                                         <div class="form-group">
-                                            <input type="text" name="txtTaiKhoan" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                                            <input type="text" name="txtTaiKhoan" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Nhập tài khoản...">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name="txtMatKhau" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                                            <input type="password" name="txtMatKhau" class="form-control form-control-user" id="exampleInputPassword" placeholder="Mật khẩu">
                                         </div>
                                         <div class="form-group">
                                             <p style="color:red;">@ViewBag.thongBao</p>
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Đăng nhập</button>
 
                                     </form>
                                 }
 
                                 <hr>
-                                <div class="text-center">
-                                    <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                </div>
+                      
                             </div>
                         </div>
                     </div>

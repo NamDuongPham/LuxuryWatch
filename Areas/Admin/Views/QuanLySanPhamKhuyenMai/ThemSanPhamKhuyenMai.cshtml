@@ -1,0 +1,139 @@
+﻿@using LuxyryWatch.Models
+@model ChuongTrinhKhuyenMai
+@{
+    ViewBag.Title = "ThemSanPhamKhuyenMai";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="card shadow mb-4">
+
+    <div style="padding: 10px;">
+        <div style="text-align: center;">
+            <h2>Thêm sản phẩm khuyến mãi</h2>
+            <hr />
+        </div>
+        @using (@Html.BeginForm())
+        {
+            <div class="row">
+                <div class="col-md-12 ThongTinKhuyenMai">
+                    <div class="col-md-4">
+                        Chương trình khuyến mãi
+                    </div>
+                    <div class="col-md-8">
+                        <input value="@Model.MaCTKM" name="MACTKM" style="display: none" />
+                        <input value="@Model.TenCTKM" readonly="readonly" class="col-md-4" />
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+            <br />
+            <div class="clearfix"></div>
+            @*Phần chi tiết nhập hàng*@
+            <table class="table tblSanPhamKhuyenMai">
+                @{ IEnumerable<SanPham> listSanPham = ViewBag.listSanPham as IEnumerable<SanPham>;}
+                <tr class="trAppend" style="display:none;">
+                    @*Tạo ra 1 tr với nội dung nhập hàng của 1 sản phẩm*@
+                    <td>
+                        <select class="ddlSanPham" name="" onchange="Changed(this)" id="mySelect">
+                            @foreach (var item in listSanPham)
+                            {
+                                <option value="@item.MaSP">@item.TenSP</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <input name="" class="txtGiaKM" value="0" />
+                    </td>
+                    <td>
+                        <input class="btnDelete btn btn-danger" text-align: center;" value="-" type="button" />
+                    </td>
+                </tr>
+                <tr class="trFirstChild" data-id="-1">
+                    <td>Sản phẩm</td>
+                    <td>Giá trị giảm</td>
+                    <td></td>
+                </tr>
+            </table>
+            @*Nút button thêm*@
+            <input type="button" value="+" class="btn btn-success" id="btnAdd" />
+            <input type="submit" value="Nhập hàng" class="btn btn-primary" id="btnNhapHang" />
+        }
+    </div>
+</div>
+
+<script>
+    $("#btnAdd").click(function () {
+        //Bước 4: Phương thức find là tìm đến thẻ nào đó: ở đây là thẻ tr (:last-child) là thẻ tr cuối cùng trong thẻ tblChiTieuPhieuNhap
+        var id_cuoi = $(".tblSanPhamKhuyenMai").find("tr:last-child").attr("data-id");
+        i = parseInt(id_cuoi) + 1;
+        //Bước 1: Nội dung phía trong thẻ trAppend
+        var tnoidung = $(".trAppend").html();
+        //Bước 2: Tạo 1 thẻ tr bao ngoài nội dung
+        var trnoidung = "<tr class=\"trAppended\" data-id=\"" + i + "\">" + tnoidung + "</tr>";
+        //Bước 3: Lấy thẻ table append vào 1 tr
+        $(".tblSanPhamKhuyenMai").append(trnoidung);
+        loadIdLenThe();
+    });
+    //Phương thức xử lý lấy thuộc tính attr từ thẻ tr gán xuống chỉ số phần tử các trong thuộc tính name của thẻ input
+    function loadIdLenThe() {
+        $(".trAppended").each(function () {
+            //Lấy thuộc tính data-id của thẻ tr hiện tại
+            var id = $(this).attr("data-id");
+            var nameMaSanPham = "[" + id + "].MaSP";//Tạo ra mã sản phẩm
+            var nameGiaKM = "[" + id + "].GiaTriGiam";//Tạo ra giá khuyễn mãi
+            $(this).find(".ddlSanPham").attr("name", nameMaSanPham);//Gán name cho dropdownlist
+            $(this).find(".txtGiaKM").attr("name", nameGiaKM);//Gán name đơn giá nhập
+
+        })
+    };
+    function CapNhatID() {
+        //Lấy lại tr 1
+        var id_cuoi = $(".tblSanPhamKhuyenMai").find(".trFirstChild").attr("data-id");
+        i = parseInt(id_cuoi) + 1;
+        $(".trAppended").each(function () {
+            var id = i;
+            $(this).attr("data-id", i);
+            //Cập nhật lại id khi xóa
+            var nameMaSanPham = "[" + id + "].MaSP";//Tạo ra mã sản phẩm
+            var nameGiaKM = "[" + id + "].GiaTriGiam";//Tạo ra đơn giá nhập
+            $(this).find(".ddlSanPham").attr("name", nameMaSanPham);//Gán name cho dropdownlist
+            $(this).find(".txtGiaKM").attr("name", nameGiaKM);//Gán name đơn giá nhập
+            i++;
+        })
+    }
+    // Xử lý sự kiện xóa
+    $("body").delegate(".btnDelete", "click", function () {
+        //Xóa phần tử cha phía ngoài
+        $(this).closest("tr").remove();
+        CapNhatID();
+    })
+    $("#btnNhapHang").click(function () {
+        if (kiemtradongia() == false) {
+            //Nếu tồn tại 1 giá trị bất kỳ thuộc class đơn giá không phải số, thì ngăn không cho submit về server
+            return false;
+        }
+        if (kiemtrasoluong() == false) {
+            //Nếu tồn tại 1 giá trị bất kỳ thuộc class đơn giá không phải số, thì ngăn không cho submit về server
+            return false;
+        }
+
+    });
+    //Kiểm tra đơn giá
+    function kiemtradongia() {
+        var bool = true;
+        $(".txtGiaKM").each(function () {
+            var giatri = $(this).val();
+            if (isNaN(giatri) == true) {
+                alert("Đơn giá không hợp lệ!");
+                bool = false;
+            }
+        });
+        return bool;
+    }
+</script>
+
+
+
+
+

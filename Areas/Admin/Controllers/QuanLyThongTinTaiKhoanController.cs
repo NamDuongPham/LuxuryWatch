@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace LuxyryWatch.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, NhanVien")]
     public class QuanLyThongTinTaiKhoanController : AdminBaseController
     {
         // GET: Admin/QuanLyThongTinTaiKhoan

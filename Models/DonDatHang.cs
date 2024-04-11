@@ -55,5 +55,6 @@ namespace LuxyryWatch.Models
         public virtual HinhThucThanhToan HinhThucThanhToan { get; set; }
 
         public virtual KhachHang KhachHang { get; set; }
+        public object NgayDatHang { get; internal set; }
     }
 }

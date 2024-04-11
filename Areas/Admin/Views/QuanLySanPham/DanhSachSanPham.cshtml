@@ -64,7 +64,7 @@
                                 }
                             </td>
                             <td>@item.SoLuongTon</td>
-                            <td>@item.DonGia</td>
+                            <td>@item.DonGia.Value.ToString("#,##")</td>
                             <td>
                                 <a href="@Url.Action("SuaSanPham", "QuanLySanPham", new { @MaSP = item.MaSP })">Sửa</a>
                                 |

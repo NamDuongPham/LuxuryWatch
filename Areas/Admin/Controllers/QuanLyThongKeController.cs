@@ -1,6 +1,7 @@
 ﻿using LuxyryWatch.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -24,6 +25,7 @@ namespace LuxyryWatch.Areas.Admin.Controllers
             ViewBag.DoanhSo = doanhso.ToString("#,##");
             ViewBag.DonDatHang = db.DonDatHangs.Count();
             ViewBag.Online = HttpContext.Application["Online"];
+            ViewBag.ChuaThanhToan = db.DonDatHangs.Count(x => x.DaThanhToan == false && x.DaHuy == false);
             return View();
         }
     }

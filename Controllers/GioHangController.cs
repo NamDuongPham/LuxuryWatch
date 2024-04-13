@@ -62,6 +62,7 @@ namespace LuxyryWatch.Controllers
                 ViewBag.Hoten = tv.Hoten;
                 ViewBag.Email = tv.Email;
                 ViewBag.SDT = tv.SoDienThoai;
+                ViewBag.DiaChi = tv.DiaChi;
 
                 // Lấy thông tin loại thành viên
                 LoaiThanhVien ltv = db.LoaiThanhViens.SingleOrDefault(x => x.MaLoaiTV == tv.MaLoaiTV);
@@ -221,6 +222,7 @@ namespace LuxyryWatch.Controllers
                 ThanhVien tv = Session["TaiKhoan"] as ThanhVien;
                 ltv = db.LoaiThanhViens.SingleOrDefault(x => x.MaLoaiTV == tv.MaLoaiTV);
                 temp = tv.Email;
+
                 //Kiểm tra khách hàng đã tồn tại trong csdl hay chưa
                 KhachHang checkKH = db.KhachHangs.SingleOrDefault(x => x.MaTV == tv.MaTV);
                 KH = checkKH;

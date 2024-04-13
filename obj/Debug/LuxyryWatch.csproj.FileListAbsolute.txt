@@ -434,7 +434,7 @@ D:\LuxuryWatch\bin\CaptchaMvc.xml
 \\Mac\Home\Desktop\LuxuryWatch\obj\Debug\LuxyryWatch.csproj.CopyComplete
 \\Mac\Home\Desktop\LuxuryWatch\obj\Debug\LuxyryWatch.dll
 \\Mac\Home\Desktop\LuxuryWatch\obj\Debug\LuxyryWatch.pdb
-\\Mac\Home\Desktop\LuxuryWatch\obj\Debug\LuxyryWatch.Migrations.InitialCreate.resources
-\\Mac\Home\Desktop\LuxuryWatch\obj\Debug\LuxyryWatch.csproj.GenerateResource.cache
 \\Mac\Home\Desktop\LuxuryWatch\bin\CKFinder.dll
 \\Mac\Home\Desktop\LuxuryWatch\bin\CKFinder.pdb
+\\Mac\Home\Desktop\LuxuryWatch\obj\Debug\LuxyryWatch.Migrations.Data.resources
+\\Mac\Home\Desktop\LuxuryWatch\obj\Debug\LuxyryWatch.csproj.GenerateResource.cache

@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace LuxyryWatch.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, NhanVien")]
     public class QuanLyNhapHangController : AdminBaseController
     {
         // GET: Admin/QuanLyNhapHang
@@ -66,7 +66,7 @@ namespace LuxyryWatch.Areas.Admin.Controllers
             }
             db.PhieuNhaps.Remove(model);
             db.SaveChanges();
-            return Content("<script>window.location.reload();</script>");
+            return RedirectToAction("DanhSachPhieuNhap");
         }
         public ActionResult ChiTietPhieuNhap(int? MaPN)
         {
@@ -83,5 +83,44 @@ namespace LuxyryWatch.Areas.Admin.Controllers
             ViewBag.MaPN = MaPN;
             return View(list);
         }
+        // public ActionResult XoaNhaCungCap(int? MaNCC)
+        //{
+        //    if (MaNCC == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+        //    var model = db.NhaCungCaps.SingleOrDefault(x => x.MaNCC == MaNCC);
+        //    if (model == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+        //    // Hiển thị trang xác nhận xóa
+        //    return View(model);
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult XoaNhaCungCap(NhaCungCap nhaCungCap)
+        //{
+        //    var model = db.NhaCungCaps.Find(nhaCungCap.MaNCC);
+        //    if (model == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+        //    try
+        //    {
+        //        db.NhaCungCaps.Remove(model);
+        //        db.SaveChanges();
+        //        return RedirectToAction("DanhSachNhaCungCap");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ViewBag.ThongBao = "Đã xảy ra lỗi khi xóa: " + ex.Message;
+        //        return View(model);
+        //    }
+        //}
     }
 }

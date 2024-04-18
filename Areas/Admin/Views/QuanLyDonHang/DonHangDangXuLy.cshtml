@@ -1,0 +1,105 @@
+﻿@using PagedList.Mvc
+@using LuxyryWatch.Models
+@model PagedList.IPagedList<DonDatHang>
+@{
+    ViewBag.Title = "DonHangDangXuLy";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Quản lý đơn hàng đang xử lý</h6>
+    </div>
+    <div class="col-md-4">
+        <br />
+        @using (Html.BeginForm("DonHangDangXuLy", "QuanLyDonHang"))
+        {
+            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="@ViewBag.search" name="search">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        }
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã đơn đặt hàng</th>
+                        <th>Khách hàng</th>
+                        <th>Ngày đặt</th>
+                        <th>Địa chỉ nhận hàng</th>
+                        <td>Ghi chú</td>
+                        <th>Tổng thanh toán</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row_@item.MaDDH">
+                            <td>@item.MaDDH</td>
+                            <td>@item.MAKH</td>
+                            <td>@item.NgayDat.Value.ToString("dd/MM/yyyy")</td>
+                            <td>@item.DiaChiNhanHang</td>
+                            <td>@item.GhiChu</td>
+                            <td>@item.TongThanhToan.Value.ToString("#,##")</td>
+                            <td>
+                                <a href="@Url.Action("DuyetDonHang", "QuanLyDonHang", new { @MaDDH = item.MaDDH })">Duyệt đơn hàng</a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <div>
+            @Html.PagedListPager(Model, Page => Url.Action("DonHangMoi", new
+       {
+           page = Page,
+           @search = @ViewBag.search
+       }), new PagedListRenderOptions
+       {
+           LiElementClasses = new string[] { "item" },
+
+       })
+        </div>
+    </div>
+
+</div>
+<style>
+    .item {
+        height: 30px;
+        width: 30px;
+        padding-top: 2px;
+        border: 0.5px solid pink;
+        text-align: center;
+        border-radius: 3px;
+    }
+
+        .item a {
+            color: black;
+            text-decoration: none;
+        }
+
+    .pagination .active {
+        background-color: #337AB7;
+        color: white;
+    }
+
+    .item:hover {
+        background-color: #EEEEEE;
+    }
+</style>
+
+
+
+

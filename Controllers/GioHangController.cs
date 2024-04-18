@@ -46,17 +46,46 @@ namespace LuxyryWatch.Controllers
         //    }
         //    return View(listGioHang);
         //}
+        //public ActionResult HienThiGioHang()
+        //{
+        //    ViewBag.AnhSanPham = db.AnhSanPhams.ToList();
+        //    List<ItemGioHang> listGioHang = LayGioHang();
+        //    bool IsLoggedIn = Session["TaiKhoan"] != null;
+
+        //    // Truyền biến IsLoggedIn vào ViewBag
+        //    ViewBag.IsLoggedIn = IsLoggedIn;
+
+        //    ThanhVien tv = LayThongTinThanhVien();
+
+        //    if (tv != null)
+        //    {
+        //        ViewBag.Hoten = tv.Hoten;
+        //        ViewBag.Email = tv.Email;
+        //        ViewBag.SDT = tv.SoDienThoai;
+        //        ViewBag.DiaChi = tv.DiaChi;
+
+        //        // Lấy thông tin loại thành viên
+        //        LoaiThanhVien ltv = db.LoaiThanhViens.SingleOrDefault(x => x.MaLoaiTV == tv.MaLoaiTV);
+        //        if (ltv != null)
+        //        {
+        //            ViewBag.uuDai = ltv.uuDai;
+        //        }
+        //        else
+        //        {
+        //            ViewBag.uuDai = 0; // Set a default value if ltv is null
+        //        }
+        //    }
+        //    return View(listGioHang);
+        //}
         public ActionResult HienThiGioHang()
         {
             ViewBag.AnhSanPham = db.AnhSanPhams.ToList();
             List<ItemGioHang> listGioHang = LayGioHang();
             bool IsLoggedIn = Session["TaiKhoan"] != null;
 
-            // Truyền biến IsLoggedIn vào ViewBag
             ViewBag.IsLoggedIn = IsLoggedIn;
 
             ThanhVien tv = LayThongTinThanhVien();
-
             if (tv != null)
             {
                 ViewBag.Hoten = tv.Hoten;
@@ -64,19 +93,24 @@ namespace LuxyryWatch.Controllers
                 ViewBag.SDT = tv.SoDienThoai;
                 ViewBag.DiaChi = tv.DiaChi;
 
-                // Lấy thông tin loại thành viên
                 LoaiThanhVien ltv = db.LoaiThanhViens.SingleOrDefault(x => x.MaLoaiTV == tv.MaLoaiTV);
-                if (ltv != null)
+                ViewBag.uuDai = ltv != null ? ltv.uuDai : 0;
+            }
+
+            // Lấy địa chỉ từ bảng KhachHang nếu khách hàng đã đăng nhập
+            if (IsLoggedIn)
+            {
+                ThanhVien loggedInUser = Session["TaiKhoan"] as ThanhVien;
+                KhachHang kh = db.KhachHangs.FirstOrDefault(k => k.MaTV == loggedInUser.MaTV);
+                if (kh != null)
                 {
-                    ViewBag.uuDai = ltv.uuDai;
-                }
-                else
-                {
-                    ViewBag.uuDai = 0; // Set a default value if ltv is null
+                    ViewBag.DiaChi = kh.DiaChi;
                 }
             }
+
             return View(listGioHang);
         }
+
 
 
         public List<ItemGioHang> LayGioHang()
@@ -199,10 +233,13 @@ namespace LuxyryWatch.Controllers
 
         public ActionResult DatHang(string HoTen, string SDT, string Email, string DiaChi, string GhiChu)
         {
+            ThanhVien loggedInUser = Session["TaiKhoan"] as ThanhVien;
             KhachHang KH = new KhachHang();
             LoaiThanhVien ltv = null;
             double uudai = 0;
             string temp = "";
+
+            // kiem tra khach hang dang nhap chua
             if (Session["TaiKhoan"] == null)
             {
                 KhachHang NKH = new KhachHang();
@@ -260,7 +297,19 @@ namespace LuxyryWatch.Controllers
             dDH.DaHuy = false;
             dDH.HoanThanh = false;
             dDH.MAKH = KH.Makh;
-            dDH.DiaChiNhanHang = DiaChi;
+            
+            if (loggedInUser != null)
+            {
+                KhachHang kh = db.KhachHangs.FirstOrDefault(k => k.MaTV == loggedInUser.MaTV);
+                if (kh != null)
+                {
+                    dDH.DiaChiNhanHang = kh.DiaChi;
+                }
+            }
+            else
+            {
+                dDH.DiaChiNhanHang = DiaChi;
+            }
             dDH.GhiChu = GhiChu;
             dDH.UuDai = uudai;
             dDH.TongThanhToan = list.Sum(x => x.ThanhTien).Value - ((decimal?)((double)list.Sum(x => x.ThanhTien).Value * uudai) / 100);

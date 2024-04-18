@@ -134,7 +134,10 @@ else
             }
             else
             {
-                 <button id="btnDatHang" class="submit check_out btn">Đặt hàng</button>
+                <div class="controls form-group">
+                    <input type="text" class="form-control" placeholder="Ghi chú" name="GhiChu" required="">
+                </div>
+                <button id="btnDatHang" class="submit check_out btn">Đặt hàng</button>
             }
         </div>
     </div>
@@ -201,7 +204,7 @@ else
             }
         });
 
-        $(document).ready(function () {
+        @*$(document).ready(function () {
             // Lấy thông tin từ các trường input và gán vào ViewBag
             var HoTen = $("#HoTen").val();
             var SDT = $("#SDT").val();
@@ -246,7 +249,48 @@ else
                     // Xử lý kết quả trả về từ server nếu cần
                     console.log(data);
                 });
-        });
+        });*@
+        $(document).ready(function () {
+        // Lấy trạng thái đăng nhập từ ViewBag
+        var isLoggedIn = @ViewBag.IsLoggedIn;
+
+        // Nếu đã đăng nhập hoặc chưa đăng nhập, hiển thị ô ghi chú
+        if (isLoggedIn || !isLoggedIn) {
+            // Đảm bảo rằng ô ghi chú được hiển thị
+            $(".form-group[data-note]").show();
+        }
+
+        // Nếu đã đăng nhập, điền thông tin từ ViewBag vào ô ghi chú
+        if (isLoggedIn) {
+            $("#GhiChu").val("@ViewBag.Note");
+        }
+    });
+
+    // Xử lý sự kiện submit form
+    $("#formKhachHang").submit(function (event) {
+        event.preventDefault(); // Ngăn chặn submit mặc định của form
+
+        // Lấy thông tin từ các trường input
+        var HoTen = $("#HoTen").val();
+        var SDT = $("#SDT").val();
+        var Email = $("#Email").val();
+        var DiaChi = $("#DiaChi").val();
+        var GhiChu = $("#GhiChu").val();
+
+        // Gửi thông tin đặt hàng lên server
+        $.post("@Url.Action("DatHang", "GioHang")",
+            {
+                HoTen: HoTen,
+                SDT: SDT,
+                Email: Email,
+                DiaChi: DiaChi,
+                GhiChu: GhiChu
+            },
+            function (data) {
+                // Xử lý kết quả trả về từ server nếu cần
+                console.log(data);
+            });
+    });
 
         // Xử lý sự kiện click nút Đặt hàng nếu đã đăng nhập
         $("#btnDatHang").click(function () {

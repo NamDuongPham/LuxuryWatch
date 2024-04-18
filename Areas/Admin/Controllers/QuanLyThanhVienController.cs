@@ -38,7 +38,7 @@ namespace LuxyryWatch.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                //ThanhVien.MatKhau = MaHoa.MD5Hash("123456");
+                ThanhVien.MatKhau = MaHoa.MD5Hash("123456");
                 db.ThanhViens.Add(ThanhVien);
                 db.SaveChanges();
                 return RedirectToAction("DanhSachThanhVien");

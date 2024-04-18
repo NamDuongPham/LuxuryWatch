@@ -3,6 +3,16 @@
     ViewBag.Title = "LienHe";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using LuxyryWatch.Models
+@{
+    LuxuryWatch_DB db = new LuxuryWatch_DB();
+    IEnumerable<ThongTin> LTT = db.ThongTins.ToList();
+    ThongTin TT = null;
+    if (LTT.Count() > 0)
+    {
+        TT = LTT.First();
+    }
+}
 <div class="contact py-sm-5 py-4">
     <div class="container py-xl-4 py-lg-2">
         <!-- tittle heading -->
@@ -19,7 +29,7 @@
                     </div>
                     <h4 class="font-weight-bold mt-sm-4 mt-3 mb-3">Address</h4>
                     <p>
-                       Hutech khu E
+                        @TT.DiaChi
                     </p>
                 </div>
             </div>
@@ -30,7 +40,7 @@
                     </div>
                     <h4 class="font-weight-bold mt-sm-4 mt-3 mb-3">Call Us</h4>
                     <p>
-                       091212122
+                        @TT.SDT
                     </p>
                 </div>
             </div>
@@ -41,7 +51,7 @@
                     </div>
                     <h4 class="font-weight-bold mt-sm-4 mt-3 mb-3">Email</h4>
                     <p>
-                        <a href="mailto:email.com">luxurywatch@gmail.com</a>
+                        <a href="mailto:email.com">@TT.Email</a>
                     </p>
                 </div>
             </div>
@@ -52,5 +62,7 @@
 </div>
 
 <div class="map">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.1196773645574!2d106.71277631422664!3d10.802144992304063!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317528a459cb43ab%3A0x6c3d29d370b52a7e!2zxJDhuqFpIGjhu41jIEPDtG5nIG5naOG7hyBUUC5IQ00gLSBIVVRFQ0g!5e0!3m2!1svi!2s!4v1474872910501" frameborder="0" style="border: 0" allowfullscreen></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.1196773645574!2d106.71277631422664!3d10.802144992304063!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317528a459cb43ab%3A0x6c3d29d370b52a7e!2zxJDhuqFpIGjhu41jIEPDtG5nIG5naOG7hyBUUC5IQ00gLSBIVVRFQ0g!5e0!3m2!1svi!2s!4v1474872910501" frameborder="0" style="border: 0" allowfullscreen></iframe>
 </div>
+
+

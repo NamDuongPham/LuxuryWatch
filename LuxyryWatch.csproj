@@ -3347,7 +3347,6 @@
     <Content Include="Areas\Admin\Views\QuanLySlider\DanhSachSlider.cshtml" />
     <Content Include="Areas\Admin\Views\QuanLySlider\CapNhatSlider.cshtml" />
     <Content Include="Areas\Admin\Views\QuanLyDonHang\DonHangMoi.cshtml" />
-    <Content Include="Areas\Admin\Views\QuanLyDonHang\DonDangXuLy.cshtml" />
     <Content Include="Areas\Admin\Views\QuanLyDonHang\DonHangDaHoanThanh.cshtml" />
     <Content Include="Areas\Admin\Views\QuanLyDonHang\DonHangDaHuy.cshtml" />
     <Content Include="Areas\Admin\Views\QuanLyDonHang\DuyetDonHang.cshtml" />
@@ -3374,6 +3373,7 @@
     <Content Include="Areas\Admin\Views\QuanLySanPhamKhuyenMai\ThemSanPhamKhuyenMai.cshtml" />
     <Content Include="Areas\Admin\Views\QuanLySanPhamKhuyenMai\SuaSanPhamKhuyenMai.cshtml" />
     <Content Include="Areas\Admin\Views\QuanLySanPhamKhuyenMai\XoaSanPhamKhuyenMai.cshtml" />
+    <Content Include="Areas\Admin\Views\QuanLyDonHang\DonHangDangXuLy.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

@@ -29,7 +29,7 @@ namespace LuxyryWatch.Areas.Admin.Controllers
         }
 
         // don hang dang cho xu ly
-        public ActionResult DonDangXuLy(int? page, string search)
+        public ActionResult DonHangDangXuLy(int? page, string search)
         {
             int pageSize = 5;
             int pageNumber = (page ?? 1);
@@ -83,9 +83,7 @@ namespace LuxyryWatch.Areas.Admin.Controllers
             model.DiaChiNhanHang = diachi;
             model.GhiChu = ghichu;
             db.SaveChanges();
-            return Content("<script>alert('Cập thông tin khách hàng thành công!'); window.location.reload();</script>");
-
-            //return Content("<script>window.location.reload();</script>");
+            return RedirectToAction("DonHangMoi");
         }
 
         // duyet don hang
@@ -129,8 +127,6 @@ namespace LuxyryWatch.Areas.Admin.Controllers
             {
 
                 //GuiEmail("Xác nhận đơn hàng của hệ thống", ddhkh.KhachHang.Email, "avanh090@gmail.com", "jhvpedzqhrnyamsr.", "Đơn hàng của bạn sẽ được giao và ngày: " + dDHUpdate.NgayGiao.Value.ToString("dd/MM/yyyy") + email);
-                //return Content("<script>alert('Đơn hàng đang chờ xử lý!'); window.location.reload();</script>");
-
                 return RedirectToAction("DonHangDangXuLy");
             }
             else if (dDH.HoanThanh == true)

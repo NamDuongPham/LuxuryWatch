@@ -82,7 +82,7 @@ namespace LuxyryWatch.Areas.Admin.Controllers
             }
             db.LoaiSanPhams.Remove(model);
             db.SaveChanges();
-            return Content("<script>window.location.reload();</script>");
+            return RedirectToAction("DanhSachLoaiSanPham");
         }
         protected override void Dispose(bool disposing)
         {

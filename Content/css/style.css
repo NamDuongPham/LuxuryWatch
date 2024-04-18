@@ -971,7 +971,6 @@ span.item_price {
 }
 
 .product-sec1.product-sec2 {
-    background: #F45C5D;
     position: relative;
 }
 
@@ -2580,7 +2579,9 @@ div#testimonials h4.m-title {
         margin-top: 1em;
     }
     .bg-right-nut {
-        margin-top: 6em;
+        /*margin-top: 6em;*/
+        overflow:hidden;
+        width:100%
     }
     p.w3l-nut-middle {
         right: 26%;

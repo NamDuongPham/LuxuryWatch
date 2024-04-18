@@ -1,9 +1,9 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
 }
-
+<script src="~/Areas/Admin/Content/vendor/chart.js/Chart.js"></script>
+<script src="~/Areas/Admin/Content/vendor/chart.js/Chart.min.js"></script>
 <div class="row">
 
     <!-- Earnings (Monthly) Card Example -->
@@ -79,50 +79,100 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <!-- Place canvas for chart -->
-    <div class="col-md-12">
-        <canvas id="myChart" width="400" height="400"></canvas>
+
+<!-- Place canvas for chart -->
+@*<div class="row">
+        <div class="col-md-12">
+            <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+    </div>*@
+
+@*<div class="row">
+    <div class="col-md-4">
+        <input type="date" id="ngayThongKe" class="form-control">
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-primary" onclick="thucHienThongKe()">Thực hiện thống kê</button>
     </div>
 </div>
+<div class="row mt-4">
+    <div class="col-md-12">
+        <canvas id="myChart" width="400" height="200"></canvas>
+    </div>
+</div>*@
 
-<!-- Load Chart.js library -->
-@*<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script>
-    $(document).ready(function () {
-        // Get data from ViewBag and create chart
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Thành viên', 'Doanh thu', 'Đơn hàng', 'Chua Thanh Toan'],
-                datasets: [{
-                    label: 'Thông kê',
-                    data: [@ViewBag.ThanhVien, @ViewBag.DoanhSo, @ViewBag.DonDatHang, @ViewBag.ChuaThanhToan],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+@section scripts {
+    <script>
+    function thucHienThongKe() {
+    var ngayThongKe = $('#ngayThongKe').val();
+
+    $.ajax({
+        url: '@Url.Action("ThongKeTheoNgay", "QuanLyThongKe")',
+        type: 'POST',
+        data: { ngayThongKe: ngayThongKe },
+        success: function (data) {
+            if (window.myChart instanceof Chart) {
+                window.myChart.destroy();
+            }
+
+            var labels = [];
+            var doanhThu = [];
+            var soLuongDonHang = [];
+            var soLuongSanPham = [];
+
+            // Tạo mảng labels, doanhThu, soLuongDonHang và soLuongSanPham từ dữ liệu JSON trả về
+            for (var i = 0; i < data.length; i++) {
+                labels.push(data[i].NgayDat);
+                doanhThu.push(data[i].TongThanhToan);
+                soLuongDonHang.push(data[i].TongSoDonHang);
+                soLuongSanPham.push(data[i].TongSoLuongSanPham);
+            }
+
+            // Lấy context của canvas
+            var ctx = document.getElementById('myChart').getContext('2d');
+            // Vẽ biểu đồ
+            window.myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Doanh thu',
+                        data: doanhThu,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Số lượng đơn hàng',
+                        data: soLuongDonHang,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Số lượng sản phẩm',
+                        data: soLuongSanPham,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
                     }
                 }
-            }
-        });
-    });
-</script>*@
+            });
 
+        }
+    });
+}
+
+    </script>
+
+}
